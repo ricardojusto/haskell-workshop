@@ -12,7 +12,7 @@ are developed using [Big - the antidote to your presentation procrastination](ht
 PDFs are generated using [BigOut](https://github.com/abenrob/bigout) but it is broken so I'm doing...
 
 ```bash
-$ node bigout.js http://192.168.1.168:46109 0 50
+$ node bigout.js http://localhost:<PORT> 0 50
 $ convert outputs/*.png hw_s01e01.pdf
 $ rm -f outputs/*.png
 ```
