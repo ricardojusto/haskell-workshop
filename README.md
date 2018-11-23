@@ -6,7 +6,7 @@ Our internal Haskell Workshop!
 
 ### Big Presentations HOWTO
 
-Big presentations are developed using [Big. The antidote to your presentation procrastination.](https://github.com/tmcw/big)
+Big presentations are developed using [Big - the antidote to your presentation procrastination](https://github.com/tmcw/big).
 
 PDFs are generated using [BigOut](https://github.com/abenrob/bigout) but it is broken so I'm doing...
 
