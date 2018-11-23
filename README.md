@@ -17,6 +17,8 @@ $ convert outputs/*.png hw_s01e01.pdf
 $ rm -f outputs/*.png
 ```
 
+after bigout creates the PNGs.
+
 ## Exercises/Projects
 
 ### Yarilabs
