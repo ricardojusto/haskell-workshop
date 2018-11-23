@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
+    <title>Haskell Workshop S01E02</title>
+    <link href='big.css' rel='stylesheet' type='text/css' />
+    <link href='yari.css' rel='stylesheet' type='text/css' />
+    <link href='highlight.css' rel='stylesheet' type='text/css' />
+    <script src='big.js'></script>
+    <script src='highlight.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </head>
+  <body class='light'>
+
+    <div>
+      <p class='no-break'><em>Haskell <code>s01e02</code></em></p>
+      <p>Types-R-Us!</p>
+      <!--strong class='no-break'>(and classes too)</strong-->
+    </div>
+
+    <div>Revisão</div>
+
+    <div>
+      <pre><code>
+$ ghci
+GHCi, version 8.4.4: http://www.haskell.org/ghc/...
+Loaded GHCi configuration from (...).ghci
+Prelude&gt; 
+      </code></pre>
+    </div>
+
+    <div>:quit, :q</div>
+    <div>:browse</div>
+    <div>:type, :t</div>
+    <div>:info, :i</div>
+
+    <div>
+      <pre><code class="language-haskell">
+Prelude&gt; :type (* 2)        
+(* 2) :: Num a =&gt; a -&gt; a
+      </code></pre>
+    </div>
+
+    <div>
+      <pre><code>
+Prelude&gt; :info (*)
+class Num a where
+  ...
+  (*) :: a -&gt; a -&gt; a
+  ...
+    -- Defined in ‘GHC.Num’
+infixl 7 *
+      </code></pre>
+    </div>
+
+    <div><strong>Tipos</strong>: <a>conceitos</a> <em>básicos</em></div>
+
+    <div>
+      Um <strong>Tipo</strong> é um conjunto de <em>valores</em>,
+      que partilham uma <em>propriedade comum</em>.
+    </div>
+
+    <div>
+      Por exemplo, o <strong>tipo</strong> <a>Bool</a>
+      tem dois valores (<em>ou habitantes</em>): <a>True</a> e <a>False</a>
+    </div>
+
+    <div>Usa-se a notação:
+      <pre><code class="haskell">v :: T</code></pre>
+      para significar que <strong>v</strong> <em>tem o tipo</em>
+      <strong>T</strong> (ou que <strong>v</strong>
+      <em>habita</em> <strong>T</strong>).
+    </div>
+
+    <div>
+      Em <a>Haskell</a> toda a <em>expressão</em> tem um <strong>tipo</strong>
+    </div>
+
+    <div>
+      Mais, o <strong>tipo</strong> de uma <em>expressão</em>
+      é <strong>calculado</strong> antes da sua avaliação!
+    </div>
+
+    <div>
+      Este processo é denominado de <em>Type Inference</em> e é
+      <strong>fundamental</strong> em <a>Haskell</a>
+    </div>
+
+    <div align="center">
+      <p>Typing Rule for Functional Application</p>
+      <pre><code class="haskell">f :: A -&gt; B    e :: A</code></pre>
+      <hr size="2">
+      <pre><code class="haskell">f e :: B</code></pre>
+    </div>
+
+    <div>
+      É por causa deste mecanismo de <em>inferência de tipos</em>
+      que <a>Haskell</a> é uma linguagem <strong>type safe</strong>.
+    </div>
+
+    <div><strong>Type Safe</strong> = 
+      Não ocorrem erros de colisão de tipos <em>durante</em>
+      a <a>avaliação</a> de uma <em>expressão</em>!
+    </div>
+
+    <div><strong>Tipos Básicos</strong> em <a>Haskell</a></div>
+
+    <div>
+      <em>Bool:</em>
+      Contém apenas dois <a>habitantes</a>
+      <pre><code>True, False</code></pre>
+    </div>
+
+    <div>
+      <em>Char:</em>
+      Contém todos os caracteres do <a>sistema Unicode</a>.
+      <pre><code>'a', 'λ' '🙂', ...</code></pre>
+    </div>
+    
+    <div>
+      <em>String:</em>
+      Todas as sequências de caracteres.
+      <pre><code>"λ-calculus 🙂", "Albertina", ...</code></pre>
+    </div>
+
+    <div>
+      <em>Int:</em>
+      Inteiros de precisão fixa (64-bits no GHC).
+      <pre><code>-2, 100, 2^62 (2^63 &lt; 0 !!!)</code></pre>
+    </div>
+
+    <div>
+      <em>Integer:</em>
+      Todos os inteiros até à <a>capacidade de memória</a> da máquina
+      (BigIntegers noutras linguagens).
+      <pre><code>2^10000 (dez-mil)</code></pre>
+    </div>
+
+    <div>
+      <em>Float:</em>
+      Decimais, precisão simples.
+      <pre><code>-12.21, 0.05 2e-3</code></pre>
+    </div>
+
+    <div>
+      <em>Double:</em>
+      Decimais, precisão dupla.
+      <pre><code>sqrt 2 :: Float / Double</code></pre>
+    </div>
+
+    <div>
+      <em>Listas:</em>
+      Sequências de elementos <strong>do mesmo tipo</strong>.
+      <pre><code class="haskell">
+[True, False, False]   :: ???
+
+['a', 'λ', 'ç', 'z']   :: ???
+
+["Um", "Dois", "Três"] :: ???
+      </code></pre>
+    </div>
+
+    <div>
+      <em>Listas:</em>
+      Sequências de elementos <strong>do mesmo tipo</strong>.
+      <pre><code class="haskell">
+[True, False, False]   :: [Bool]
+
+['a', 'λ', 'ç', 'z']   :: [Char]
+
+["Um", "Dois", "Três"] :: [String]
+      </code></pre>
+    </div>
+
+    <div>
+      <em>Listas:</em>
+      Sequências de elementos <strong>do mesmo tipo</strong>.
+      <pre><code class="haskell">
+[[True, False], [False]] :: ???
+
+[(||), (&amp;&amp;)]             :: ???
+
+[['a', 'e'], ['b', 'c']] :: ???
+      </code></pre>
+    </div>
+
+    <div>
+      <em>Listas:</em>
+      Sequências de elementos <strong>do mesmo tipo</strong>.
+      <pre><code class="haskell">
+[[True, False], [False]] :: [[Bool]]
+
+[(||), (&amp;&amp;)]             :: [Bool -&gt; Bool -&gt; Bool]
+
+[['a', 'e'], ['b', 'c']] :: [[Char]]
+      </code></pre>
+    </div>
+
+    <div>
+      <em>Tuplos:</em>
+      Sequências finitas de <em>componentes</em> de tipos
+      possivelmente diferentes, entre <strong>()</strong> e
+      separados por vírgulas
+      <pre><code class="haskell">
+         (False, True) :: (?, ?)
+
+     (False, 'a', not) :: ???
+
+("False", (True, 'a')) :: ???
+      </code></pre>
+    </div>
+
+    <div>
+      <em>Tuplos:</em>
+      Sequências finitas de <em>componentes</em> de tipos
+      possivelmente diferentes, entre <strong>()</strong> e
+      separados por vírgulas
+      <pre><code class="haskell">
+         (False, True) :: (Bool, Bool)
+
+     (False, 'a', not) :: (Bool, 'a', Bool -&gt; Bool)
+
+("False", (True, 'a')) :: (String, (Bool, Char))
+      </code></pre>
+    </div>
+
+    <div>
+      <em>Funções como Tipos:</em><br>
+      Uma função é uma <a>correspondência</a> entre elementos de
+      um tipo e elementos de (outro) tipo.<br/> Denota-se por
+      <strong>T1 -&gt; T2</strong> o tipo de todas as funções que
+      fazem corresponder elementos do tipo <strong>T1</strong>
+      a elementos do tipo <strong>T2</strong>.
+    </div>
+
+    <div>
+      <em>Funções como Tipos:</em>
+      <pre><code class="haskell">
+add :: (Int, Int) -&gt; Int
+add (x, y) = x + y
+      </code></pre>
+      A <em>anotação</em> do tipo da função é uma <em>convenção</em> em
+      <a>Haskell</a>, útil como <u>documentação</u>. É, no entanto, verificada
+      a sua consistência com os tipos <strong>inferidos</strong>.
+    </div>
+
+    <div>
+      <em>Currying de Funções:</em>
+      <br>
+      Um tipo:
+      <pre><code class="haskell">
+Int -&gt; Int -&gt; Int -&gt; Int
+      </code></pre>
+      Significa:
+      <pre><code class="haskell">
+Int -&gt; (Int -&gt; (Int -&gt; Int))
+      </code></pre>
+    </div>
+
+    <div>
+      <em>Currying de Funções:</em><br>
+      Consequentemente:
+      <pre><code class="haskell">
+mult x y z
+      </code></pre>
+      Significa:
+      <pre><code class="haskell">
+((mult x) y) z)
+      </code></pre>
+    </div>
+
+    <div>
+      <em>Tipos polimórficos:</em><br>
+      A função <em>length</em>, definida no <strong>Prelude</strong>,
+      calcula o comprimento de uma lista <a>qualquer que seja o seu</a>
+      <strong>tipo</strong>.
+    </div>
+
+    <div>
+      <em>Tipos polimórficos:</em><br>
+      <pre><code class="haskell">
+length ["Um", "Dois"]  == 2
+length [sin, cos, tan] == 3
+length [2, 3, 5, 7]    == 4
+      </code></pre>
+    </div>
+
+    <div>
+      <em>Tipos polimórficos:</em><br>
+      Esta "ideia" de que <em>length</em> pode ser
+      aplicada a listas cujo <strong>tipo</strong>
+      pode ser "qualquer" torna-se precisa pela
+      inclusão de uma <a><u>type variable</u></a>
+      na sua definição.<br>
+      <pre><code>
+length :: [a] -&gt; Int
+      </code></pre>
+      Ou seja, para qualquer <strong>tipo</strong> <a>a</a>,
+      <em>length</em> tem o tipo<br> [a] -&gt; Int.
+    </div>
+
+    <div>
+      <em>Tipos polimórficos:</em><br>
+      Um <strong>tipo</strong> que contenha uma ou mais
+      <a>type variables</a> é denominado de
+      <a>polimórfico</a>. Exemplos:
+      <pre><code>
+fst  :: (a, b) -&gt; a
+head :: [a] -&gt; a
+take :: Int -&gt; [a] -&gt; [a]
+zip  :: [a] -&gt; [b] -&gt; [(a, b)]
+id   :: a -&gt; a
+      </code></pre>
+      Interessante é constatar que o tipo de uma função
+      polimórfica nos dá uma <em>boa indicação</em> do
+      seu comportamento.
+    </div>
+
+    <div>
+      <em>Overloaded Types:</em><br>
+      O operador <strong>+</strong> calcula a soma de
+      <a>quaisquer</a> dois valores numéricos.
+      <pre><code>
+1   + 2   == 3
+1.0 + 2.0 == 3.0
+3.5 + 2   == 5.5
+      </code></pre>
+    </div>
+
+    <div>
+      <em>Overloaded Types:</em><br>
+      Esta "ideia" de que <strong>+</strong> pode ser
+      aplicado a números de qualquer <strong>tipo</strong>
+      numérico evidencia-se no seu <strong>tipo</strong>
+      (o tipo de <strong>+</strong>), pela <a>inclusão de uma
+      restrição de classe</a> (ou <em>class constraint</em>).
+    </div>
+
+    <div>
+      <em>Overloaded Types:</em><br>
+      Uma restrição de classe escreve-se na forma <strong>"C a"</strong>
+      em que <strong>"C"</strong> é o nome da classe e <strong>"a"</strong>
+      é a <a>type variable</a>.
+    </div>
+
+    <div>
+      <em>Overloaded Types:</em><br>
+      Exemplos:
+      <pre><code class="language-haskell">
+(+) :: Num a =&gt; a -&gt; a -&gt; a
+(*) :: Num a =&gt; a -&gt; a -&gt; a
+negate :: Num a =&gt; a -&gt; a
+abs :: Num a =&gt; a -&gt; a
+      </code></pre>
+      Um tipo que contenha um ou mais <strong>class constraints</strong>
+      diz-se um tipo <a>overloaded</a>.
+    </div>
+
+    <div>
+      <em>Overloaded Types:</em><br>
+      Os próprios números são <strong>overloaded</strong>.
+      <pre><code class="language-haskell">
+4 :: Num p =&gt; p
+      </code></pre>
+    </div>
+
+    <div><a>That's Aλλ Folks!</a></div>
+  </body>
+</html>

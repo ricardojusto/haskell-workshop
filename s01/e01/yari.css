@@ -1,0 +1,31 @@
+
+.no-break {
+  white-space: pre;
+}
+
+.yari-logo {
+  background-image: url('yarilabs.jpg');
+  background-position: calc(100% - 20px) calc(100% - 20px);
+  background-repeat: no-repeat;
+}
+
+@-webkit-keyframes blinker {
+  from { opacity: 1.0; }
+  to { opacity: 0.5; }
+}
+
+.blink {
+  -webkit-animation-name: blinker;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: cubic-bezier(1.0,0,0,1.0);
+  -webkit-animation-duration: 1500ms;
+}
+
+.dark {
+  background-color: #002736;
+  color: #fff;
+}
+
+.dark em {
+  color: #00E07E;
+}

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
+    <title>big</title>
+    <link href='big.css' rel='stylesheet' type='text/css' />
+    <link href='yari.css' rel='stylesheet' type='text/css' />
+    <link href='highlight.css' rel='stylesheet' type='text/css' />
+    <style>
+.new-shiny { background: #aaaaaa; }
+    </style>
+    <script src='big.js'></script>
+    <script src='highlight.js'></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </head>
+  <body class='dark yari-logo'>
+
+    <div><p class='no-break'><em>Haskell <code>s01e01</code></em></p> Primeiro Avanço</div>
+
+    <div>Porquê <em>Haskell</em>?</em></div>
+
+    <div>Porque é <em>funcional</em> e funcional <em>é fixe</em>!</div>
+
+    <div>Porque queremos <em>ler</em> o código do <em>PostgREST</em> 🙂</div>
+
+    <div>Porque nos obriga a <em>«sair»</em> do paradigma <em>imperativo</em>...</div>
+
+    <div><em class='blink'>The Hard Way!</em></div>
+
+    <div><em>Haskell</em>, para além de <em>estritamente</em> funcional...</div>
+
+    <div>...obriga-nos a pensar em <em>matematiquês</em>...</div>
+
+    <div><em>λ</em>-<em>calculus</em>: <pre><code>T=λxy.x; F=λxy.y</code></pre></div>
+
+    <div><em>Type theory</em>: proofs as programs</div>
+
+    <div><em>Algebra</em>: monoids, semigroups...</div>
+
+    <div><em>Category theory</em>: Functors, cata-<em>morphism</em>, hylo...</div>
+
+    <div>Ok... Não é 🙈 <em>estritamente 🙉 necessário 🙊</em> começar por aqui...</div>
+
+    <div><em>Para já</em> (...🙂) fica tudo em <em>fila-de-espera</em>!</div>
+
+    <div>Depois, <em>Haskel</em> traz-nos novas <em>ferramentas:</em></div>
+
+    <div>Pattern Matching</div>
+
+    <div>Tuples</div>
+
+    <div>Maybes</div>
+
+    <div><em>ok, ok... Elm...</em></div>
+
+    <div>Functors</div>
+
+    <div>Applicatives</div>
+
+    <div>Alternatives</div>
+
+    <div>Monoids</div>
+
+    <div>Foldables</div>
+
+    <div>Traversables</div>
+
+    <div><em>Point-free</em> 🥋 programming</div>
+
+    <div><em>Monads!</em></div>
+
+    <div><img src="coding-horror.png" alt=""><p>Por onde <em>começar?</em></p></div>
+
+    <div><em>Fundamentos?</em> Tipos/Classes base? <em>Sintaxe?</em> Exercism?</div>
+
+    <div>Vamos começar pelo <em>REPL</em> do Haskell: o <em>GHCi</em></div>
+
+    <div>
+      <pre><code>
+$ stack repl
+$ stack ghci
+$ stack exec -- ghci
+      </code></pre>
+    </div>
+
+    <div><img src="download-stack.png"></div>
+
+    <div>
+      <em>Configuração</em>
+      <pre>~/.ghci</pre>
+      <pre><code>
+:set prompt "\x03BB&gt; "
+:set prompt-cont "?| "
+:set editor vi
+      </code></pre>
+    </div>
+
+    <div>
+      <em>Commandos:</em> GHCi
+      <pre class='plain'>
+    <em>
+    :quit 🙂, Ctrl-D
+
+    :
+    :help, :?
+    :browse
+    :type
+    :info
+    :{ ... :}
+    </em>
+
+    :add  <em>:cd</em>     :cmd   <em>:complete</em> :ctags
+    :def  <em>:edit</em>   :etags <em>:module</em>   :issafe
+    :kind <em>:load</em>   :main  <em>:undef</em>    :reload
+    :run  <em>:script</em> :unadd <em>:!<command></em>
+      </pre>
+      <em>A maior parte dos comandos podem ser abreviados pela primeira letra!</em>
+    </div>
+
+    <div>
+      <em>Commandos para depuração:</em>
+      <pre>
+:abandon   <em>:back</em>    :break
+:continue  <em>:delete</em>  :force
+:forward   <em>:history</em> :list
+:print     <em>:sprint</em>  :step
+:steplocal <em>:stepmodule</em>
+:trace
+      </pre>
+    </div>
+
+    <div>
+      <em>Commandos para definições:</em>
+      <pre>
+    :set :seti
+    :set args
+    :set prog
+    :set prompt
+    :set prompt-cont
+    :set prompt-function
+    :set prompt-cont-function
+    :set editor
+    :set stop
+    :unset
+      </pre>
+      <em>Tipicamente usadas no ~/.ghci</em>
+    </div>
+
+    <div>
+      <em>Commandos de visualização de informação:</em>
+      <pre>
+:show bindings  <em>:show breaks</em>
+:show context   <em>:show imports</em>
+:show linker    <em>:show modules</em>
+:show packages  <em>:show paths</em>
+:show language  <em>:show targets</em>
+:show &lt;setting&gt; <em>:showi language</em>
+      </pre>
+    </div>
+
+    <div><em>GHCi:</em> prelúdio e comandos</div>
+
+    <div>
+      <em>Prelude</em>
+      <ul>
+        <li>Prelude é uma biblioteca de <em>funções standard</em></li>
+        <li>Está incluído na <a href="https://www.stackage.org/package/base" target="_blank">base package</a> do Haskell</li>
+        <li>Pode ser desativado</li>
+        <li>Existem Preludes "alternativos"</li>
+      </ul>
+    </div>
+
+    <div>
+      <em>Prelude</em>
+      <pre><code>
+$ stack repl
+$ stack ghci --ghci-options \
+        -XNoImplicitPrelude
+$ stack exec -- ghci \
+      -XNoImplicitPrelude
+      </code></pre>
+    </div>
+
+    <div>
+      <em>Comandos</em>
+      <ol>
+        <li><em>:browse  </em> &ndash; com/sem Prelude</li>
+        <li><em>:info    </em> &ndash; informação sobre simbolos</li>
+        <li><em>:type    </em> &ndash; informação sobre expressões</li>
+        <li><em>:edit    </em> &ndash; acesso ao editor configurado</li>
+        <li><em>:(re)load    </em> &ndash; carrega um módulo (sair com :m)</li>
+        <li><em>:{ ... :}</em> &ndash; multilinha</li>
+      </ol>
+      <p>Ver também: <a href="https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/ghci.html">Using GHCi</a></p>
+    </div>
+
+    <div>
+      <em>Hello, Haskell!</em>
+      <pre><code>
+main :: IO ()
+main = putStrLn "Hello, Haskell!"
+      </code></pre>
+    </div>
+
+    <div>
+      <em>Exercícios:</em>
+      <ul>
+        <li>double</li>
+        <li>double <em>(point-free)</em></li>
+        <li>haskell <em>(channel λ)</em></li>
+        <li>reverse</li>
+        <li>...</li>
+      </ul>
+    </div>
+
+    <div>
+      <em>Próximos passos:</em>
+      <p class="blink">Sugestões?</p>
+    </div>
+
+    <div>
+      <em>Sugestões:</em>
+      <ul>
+        <li><em>Syntaxe</em> &ndash; Funções/Módulos</li>
+        <li><em>Tipos</em> &ndash; e Classes (Eq, Ord, ...)</li>
+        <li><em>Strings</em> &ndash; exercícios</li>
+        <li><em>Listas</em> &ndash; exercícios</li>
+        <li><em>Prelude</em> &ndash; O que vem incluído?</li>
+        <li>...</li>
+      </ul>
+    </div>
+
+    <div><em>Referências:</em>
+      <ul>
+        <li class='no-break'>https://www.haskell.org/documentation</li>
+        <li class='no-break'>https://www.haskell-lang.org/documentation</li>
+        <li class='no-break'>https://haskellstack.org/</li>
+        <br/>
+        <li class='no-break'><em>Haskell 2010</em> &ndash; Language Report</li>
+        <li class='no-break'><em>Programming in Haskel</em> &ndash; Hutton</li>
+        <li class='no-break'><em>Haskell Programming</em> &ndash; Allen, Moronuki (typeclasses.com)</li>
+      </ul>
+    </div>
+  </body>
+</html>
