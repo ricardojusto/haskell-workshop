@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+    <title>Haskell Workshop S01E03</title>
+
+    <link href="https//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+    <link href="big.css" rel="stylesheet" type="text/css" />
+    <link href="yari.css" rel="stylesheet" type="text/css" />
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css" rel="stylesheet" type="text/css">
+
+    <script src="big.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/languages/haskell.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+  </head>
+
+  <body class="light">
+
+    <div>
+      <p class="no-break"><em>Haskell <code>s01e03</code></em></p>
+      <p>Classy Types</p>
+    </div>
+
+    <div>Revisão</div>
+
+    <div>
+      <strong>Basic Types</strong>:
+      <a>Bool</a>, 
+      <a>Char</a>, 
+      <a>String</a>, 
+      <a>Int</a>, 
+      <a>Integer</a>, 
+      <a>Float</a> e 
+      <a>Double</a>.
+    </div>
+
+    <div>
+      <strong>List Types</strong> [Char]
+    </div>
+
+    <div>
+      <strong>Tuple Types</strong> (Int, Bool)
+    </div>
+
+    <div>
+      <strong>Function Types</strong>: <code>(-&gt;)</code>
+    </div>
+
+    <div>
+      <strong>Overloaded Operators</strong>:
+      <code>(+)</code>
+      <code>(/)</code>
+      ...
+      <code>(,)</code>
+      <code>(++)</code>
+    </div>
+
+    <div>
+      <a>Awesome!</a>
+    </div>
+
+    <div>Classes Básicas</div>
+
+    <div>Recordemos: um <strong>Tipo</strong> é uma <a>coleção de valores relacionados</a></div>
+
+    <div>Analogamente...</div>
+
+    <div>Uma <strong>Classe</strong> é uma <a>coleção de</a> <strong>Tipos</strong> que suportam as mesmas <em>"overloaded operations"</em> (denominadas de <strong>métodos</strong>)</div>
+
+    <div>
+      <em>Haskell</em> fornece uma série de <strong>Classes Básicas</strong>:
+      <pre>
+   Eq Ord Show Read Num
+   Integral Fractional</pre>
+      Também designadas de <strong>Type Classes</strong>
+    </div>
+
+    <div>
+      <p class="no-break"><em>Eq &ndash; Equality Types</em></p>
+    </div>
+
+    <div>
+      <p class="no-break"><em>Eq &ndash; Equality Types:</em></p>
+      Todos os <strong>Tipos</strong> cujos <a>habitantes</a>
+      possam ser comparados pelos predicados <code>(==)</code> e <code>(/=)</code>
+    </div>
+
+    <div>
+      <p class="no-break"><em>Eq &ndash; Equality Types:</em></p>
+      <pre><code class="hs">
+(==) :: a -&gt; a -&gt; Bool
+(/=) :: a -&gt; a -&gt; Bool
+      </code></pre>
+      Todos os tipos básicos (
+      <a>Bool</a>, 
+      <a>Char</a>, 
+      <a>String</a>, 
+      <a>Int</a>, 
+      <a>Integer</a>, 
+      <a>Float</a> e 
+      <a>Double</a>)
+      são instâncias da classe <em>Eq</em>
+    </div>
+
+    <div>
+      <p class="no-break"><em>Eq &ndash; Equality Types:</em></p>
+      <pre><code class="hs">
+(==) :: a -&gt; a -&gt; Bool
+(/=) :: a -&gt; a -&gt; Bool
+      </code></pre>
+      Os <strong>Tipos</strong> <a>List</a> e <a>Tuple</a>
+      também são instâncias de <em>Eq</em> <u>se os seus elementos o forem</u>.
+    </div>
+
+    <div>
+      <p class="no-break"><em>Eq &ndash; Equality Types:</em></p>
+      <strong>Nota</strong>: "igualdade" em <a>Haskell</a> é igualdade de <u>valor</u>!
+    </div>
+
+    <div>
+      Ou seja:
+      <pre><code class="hs">
+([1, 2, 3] == [1, 2, 3]) == True
+([1..] == [1..]) == ?
+      </code></pre>
+    </div>
+
+    <div>
+      <p class="no-break"><em>Eq &ndash; Equality Types:</em></p>
+      <a href="http://hackage.haskell.org/package/base-4.12.0.0/docs/Data-Eq.html" target="_blank">Data.Eq</a>
+    </div>
+
+    <div>
+      <p class="no-break"><em>Ord &ndash; Ordered Types</em></p>
+    </div>
+
+    <div>
+      <p class="no-break"><em>Ord &ndash; Ordered Types:</em></p>
+      Classe dos tipos que se <strong>comportam</strong> como um 
+      <a href="http://mathworld.wolfram.com/TotallyOrderedSet.html">Grupo Totalmente Ordenado</a>
+      (<a href="http://hackage.haskell.org/package/base-4.12.0.0/docs/Data-Ord.html">Data.Ord</a>)
+      <pre><code class="hs">
+(&lt;)  :: a -&gt; a -&gt; Bool
+(&lt;=) :: a -&gt; a -&gt; Bool
+(&gt;)  :: a -&gt; a -&gt; Bool
+(&gt;=) :: a -&gt; a -&gt; Bool
+ min :: a -&gt; a -&gt; a
+ max :: a -&gt; a -&gt; a
+      </code></pre>
+    </div>
+
+    <div>
+      <p class="no-break"><em>Ord &ndash; Ordered Types:</em></p>
+      Todos os tipos base são instâncias desta classe.<br>
+      Os <strong>Tipos</strong> <a>List</a> e <a>Tuple</a>
+      também são instâncias de <em>Ord</em> <u>se os seus elementos o forem</u>.
+    </div>
+
+    <div>
+      <p class="no-break"><em>Ord &ndash; Ordered Types:</em></p>
+      <p>Exemplos:</p>
+      <pre><code class="hs">
+Prelude&gt; False &lt; True
+Prelude&gt; min ’u’ ’ü’
+Prelude&gt; [1,2,3] &lt; [1,2]
+Prelude&gt; (’a’, 2) &lt; (’b’, 1)
+Prelude&gt; (’a’, 2) &lt; (’a’, 1)
+      </code></pre>
+    </div>
+
+    <div>
+      <p class="no-break"><em>Show &ndash; Showable Types</em></p>
+    </div>
+
+    <div>
+      <p class="no-break"><em>Show &ndash; Showable Types:</em></p>
+      Qualquer tipo que "queira" ser "mostrado" como uma <a>String</a>
+      pode implementar o seguinte método:
+      <pre><code class="hs">
+show :: a -&gt; String
+      </code></pre>
+    </div>
+
+    <div>
+      <p class="no-break"><em>Show &ndash; Showable Types:</em></p>
+      Todos os tipos base são instâncias desta classe.<br>
+      Os <strong>Tipos</strong> <a>List</a> e <a>Tuple</a>
+      também são instâncias de <em>Show</em> <u>se os seus elementos o forem</u>.
+    </div>
+
+    <div>
+      <p class="no-break"><em>Show &ndash; Showable Types:</em></p>
+      Exemplos:
+      <pre><code class="hs">
+Prelude&gt; show False
+Prelude&gt; show 'ü'
+Prelude&gt; show 123
+Prelude&gt; show [1, 2, 3]
+Prelude&gt; show (’a’,False)
+      </code></pre>
+      (Não confundir com o comando ghci <code>:show</code>)
+    </div>
+
+    <div>
+      <p class="no-break"><em>Read &ndash; Readable Types</em></p>
+    </div>
+
+    <div>
+      <p class="no-break"><em>Read &ndash; Readable Types:</em></p>
+      Classe dual de Show, contém todos os tipos que podem ser convertidos
+      de <strong>String</strong> usando o seguinte método:
+      <pre><code class="hs">
+read :: String -&gt; a
+      </code></pre>
+    </div>
+
+    <div>
+      <p class="no-break"><em>Read &ndash; Readable Types:</em></p>
+      Todos os tipos base são instâncias desta classe.<br>
+      Os <strong>Tipos</strong> <a>List</a> e <a>Tuple</a>
+      também são instâncias de <em>Read</em> <u>se os seus elementos o forem</u>.
+    </div>
+
+    <div>
+      <p class="no-break"><em>Read &ndash; Readable Types:</em></p>
+      Exemplos:
+      <pre><code class="hs">
+Prelude&gt; read "False" :: Bool
+Prelude&gt; read "’a’" :: Char
+Prelude&gt; read "123" :: Int
+Prelude&gt; read "[1,2,3]" :: [Int]
+Prelude&gt; read "(’a’,False)" :: (Char,Bool)
+Prelude&gt; not (read "False")
+Prelude&gt; not (read "asd")
+      </code></pre>
+      Porquê o uso de <code>::</code> nestes exemplos? Porque <u>não</u> no penúltimo exemplo?
+      O que acontece no último exemplo?
+    </div>
+
+    <div>
+      <p class="no-break"><em>Num &ndash; Numeric Types</em></p>
+    </div>
+
+    <div>
+      <p class="no-break"><em>Num &ndash; Numeric Types:</em></p>
+      Classe dos tipos cujos <a>habitantes</a> são <strong>valores numéricos</strong>
+      e que, como tal, possam ser processados usando os seguintes 6 métodos:
+      <pre><code class="hs">
+(+) :: a -&gt; a -&gt; a
+(-) :: a -&gt; a -&gt; a
+(*) :: a -&gt; a -&gt; a
+negate :: a -&gt; a
+abs :: a -&gt; a
+signum :: a -&gt; a
+      </code></pre>
+      Os tipos
+      <a>Int</a>,
+      <a>Integer</a>,
+      <a>Float</a> e
+      <a>Double</a>
+      são instâncias desta classe.
+    </div>
+
+    <div>
+      <p class="no-break"><em>Num &ndash; Numeric Types:</em></p>
+      Exemplos:
+      <pre><code class="hs">
+Prelude&gt; 1 + 2
+Prelude&gt; 1.0 + 2.0
+Prelude&gt; negate 3.0
+Prelude&gt; abs (-3)
+Prelude&gt; signum (-3)
+      </code></pre>
+      Notem que os números negativos têm que vir entre parêntesis.
+      Por exemplo <code>"abs -3"</code> significa <code>"abs - 3"</code>
+      o que é, simultaneamente, mal formado e de tipagem incorreta.
+      <a>Onde pára a divisão?!?</a>
+    </div>
+
+    <div>
+      <p class="no-break"><em>Integral &ndash; Integral Types</em></p>
+    </div>
+
+    <div>
+      <p class="no-break"><em>Integral &ndash; Integral Types:</em></p>
+      Classe dos tipos que, <u>para além de <strong>Num</strong>(éricos)</u>,
+      são <strong>Inteiros</strong> e como tal suportam os métodos de divisão
+      inteira e resto da divisão:
+      <pre><code class="hs">
+div :: a -&gt; a -&gt; a
+mod :: a -&gt; a -&gt; a
+      </code></pre>
+      Os tipos base <code>Int</code> e <code>Integer</code> são instâncias
+      desta classe e, <u>na prática</u>, são usados na sua forma infixa:
+      <pre><code class="hs">
+Prelude&gt; 7 ‘div‘ 2
+Prelude&gt; 7 ‘mod‘ 2
+      </code></pre>
+    </div>
+
+    <div>
+      <p class="no-break"><em>Fractional &ndash; Fractional Types</em></p>
+    </div>
+
+    <div>
+      <p class="no-break"><em>Fractional &ndash; Fractional Types:</em></p>
+      Classe dos tipos que, <u>para além de <strong>Num</strong>(éricos)</u>,
+      são não-<strong>Inteiros</strong> e como tal suportam os métodos de divisão
+      fracional e de inverso (<em>reciprocation</em>):
+      <pre><code class="hs">
+(/)   :: a -&gt; a -&gt; a
+recip :: a -&gt; a
+      </code></pre>
+      Os tipos base <code>Float</code> e <code>Double</code> são instâncias
+      desta classe. Exemplos:
+      <pre><code class="hs">
+Prelude&gt; 7.0 / 2.0
+Prelude&gt; recip 2.0
+      </code></pre>
+    </div>
+
+    <div>
+      Próxima sessão: <a>Funções</a>. <em>Yay!!!!!</em>
+    </div>
+
+    <div><a>That's Aλλ Folks!</a></div>
+  </body>
+</html>
