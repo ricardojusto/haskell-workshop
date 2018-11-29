@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 
-    <title>Haskell Workshop S01E03</title>
+    <title>Haskell Workshop S01E04</title>
 
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link href="big.css" rel="stylesheet" type="text/css" />
@@ -48,11 +48,73 @@ $ runhaskell dizOlá.hs
 
     <div><strong>CABUM!</strong></div>
 
-    <div><a>Conditional Expressions</a></div>
 
-    <div><a>Guarded Equations</a></div>
+    <div><a>Datatypes</a>
+      <pre><code class="shell">
+data Maybe a = Nothing | Just a
+      </code></pre>
+    <!-- Why define Maybe?
+
+        `Maybe` is a simple and useful datatype
+        that will be helpful in explaining the
+        following concepts like pattern matching
+        and that can be used for building knowledge
+        over it by defining diferent instances that
+        make `Maybe` more powerful as we progress.
+    -->
+    </div>
 
     <div><a>Pattern Matching</a></div>
+    <div>
+      <pre><code class="shell">
+f :: Maybe Int -&gt; Int
+f maybe = case maybe of Nothing  -&gt; 404
+                        (Just n) -&gt; n
+      </code></pre>
+    <!-- Sample of some simple pattern matching
+        Maybe the example could be improved?
+    -->
+   </div>
+    <div>
+      <pre><code class="shell">
+Prelude&gt; case Nothing of Nothing -&gt; 0
+Prelude&gt; case Nothing of (Just n) -&gt; 0
+      </code></pre>
+    <!-- Here we can show that these are still
+        expressions that can be composed over 
+        *and* that unlike Elm it does allow the
+        case expression for it now to express
+        all possible branches. 
+        If the case expression fails it raises
+        a runtime exception
+    -->
+   </div>
+
+    <div><a>Conditional Expressions</a></div>
+    <div>
+      <pre><code class="shell">
+iff :: Bool -&gt; a -&gt; a -&gt; a
+iff cond rTrue rFalse = case cond of True  -&gt; rTrue
+                                     False -&gt; rFalse
+      </code></pre>
+    <!-- if syntax sugar
+        We can explain how the if expression
+        is just a sugar coat over this function.
+        This function and it's signture also
+        tells a lot about its semantics.
+        It can't receive truthy values, only booleans;
+        it always requires to receive arguments of the same type;
+        it returns always the same type as the branches
+    -->
+     </div>
+    <div>
+      <em>Conditional Expressions:</em><br>
+      <pre><code class="shell">
+      (if True then "It's true!" else "meh") == (iff True "It's true!" "meh")
+      </code></pre>
+     </div>
+
+    <div><a>Guarded Equations</a></div>
 
     <div><a>Lambda Expressions</a></div>
 
