@@ -50,7 +50,7 @@ $ runhaskell dizOlá.hs
 
 
     <div><a>Datatypes</a>
-      <pre><code class="shell">
+      <pre><code class="hs">
 data Maybe a = Nothing | Just a
       </code></pre>
     <!-- Why define Maybe?
@@ -66,7 +66,7 @@ data Maybe a = Nothing | Just a
 
     <div><a>Pattern Matching</a></div>
     <div>
-      <pre><code class="shell">
+      <pre><code class="hs">
 f :: Maybe Int -&gt; Int
 f maybe = case maybe of Nothing  -&gt; 404
                         (Just n) -&gt; n
@@ -76,7 +76,7 @@ f maybe = case maybe of Nothing  -&gt; 404
     -->
    </div>
     <div>
-      <pre><code class="shell">
+      <pre><code class="hs">
 Prelude&gt; case Nothing of Nothing -&gt; 0
 Prelude&gt; case Nothing of (Just n) -&gt; 0
       </code></pre>
@@ -92,7 +92,7 @@ Prelude&gt; case Nothing of (Just n) -&gt; 0
 
     <div><a>Conditional Expressions</a></div>
     <div>
-      <pre><code class="shell">
+      <pre><code class="hs">
 iff :: Bool -&gt; a -&gt; a -&gt; a
 iff cond rTrue rFalse = case cond of True  -&gt; rTrue
                                      False -&gt; rFalse
@@ -109,7 +109,7 @@ iff cond rTrue rFalse = case cond of True  -&gt; rTrue
      </div>
     <div>
       <em>Conditional Expressions:</em><br>
-      <pre><code class="shell">
+      <pre><code class="hs">
       (if True then "It's true!" else "meh") == (iff True "It's true!" "meh")
       </code></pre>
      </div>
