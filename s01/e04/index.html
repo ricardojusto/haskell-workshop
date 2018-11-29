@@ -7,7 +7,7 @@
 
     <title>Haskell Workshop S01E03</title>
 
-    <link href="https//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link href="big.css" rel="stylesheet" type="text/css" />
     <link href="yari.css" rel="stylesheet" type="text/css" />
     <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css" rel="stylesheet" type="text/css">
@@ -26,14 +26,37 @@
       <p>Defining Functions</p>
     </div>
 
-    <div>Revisão</div>
+    <div><a>Syntax</a></div>
 
-    <div>Syntax</div>
-    <div>Conditional Expressions</div>
-    <div>Guarded Equations</div>
-    <div>Pattern Matching</div>
-    <div>Lambda Expressions</div>
-    <div>Operator Sections</div>
+    <div>Source code is <a>UTF-8 encoded</a> in <strong>GHC</strong></div>
+
+    <div>Scripting example</div>
+
+    <div>
+      <pre><code class="shell">
+$ alias runhaskell='stack runhaskell'
+$ runhaskell sayHello.hs
+$ file sayHello.hs
+$ vi sayHello.hs
+$ iconv -f utf-8 \
+        -t iso-8859-1 \
+  sayHello.hs &gt; dizOlá.hs
+$ file dizOlá.hs
+$ runhaskell dizOlá.hs
+      </code></pre>
+    </div>
+
+    <div><strong>CABUM!</strong></div>
+
+    <div><a>Conditional Expressions</a></div>
+
+    <div><a>Guarded Equations</a></div>
+
+    <div><a>Pattern Matching</a></div>
+
+    <div><a>Lambda Expressions</a></div>
+
+    <div><a>Operator Sections</a></div>
 
     <div><a>That's Aλλ Folks!</a></div>
 
