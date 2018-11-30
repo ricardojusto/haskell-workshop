@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+    <title>Haskell Workshop S01E04</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="big.css" rel="stylesheet" type="text/css" />
+    <link href="yari.css" rel="stylesheet" type="text/css" />
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css" rel="stylesheet" type="text/css">
+
+    <script src="big.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/languages/haskell.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+  </head>
+
+  <body class="light">
+
+    <div>
+      <p class="no-break"><em>Haskell <code>s01e04</code></em></p>
+      <p>Introdução à syntaxe e funções</p>
+    </div>
+
+    <div><a>Syntax</a></div>
+
+    <div>Source code is <a>UTF-8 encoded</a> in <strong>GHC</strong></div>
+
+    <div>Scripting example</div>
+
+    <div>
+      <pre><code class="shell">
+$ alias runhaskell='stack runhaskell'
+$ runhaskell sayHello.hs
+$ file sayHello.hs
+$ vi sayHello.hs
+$ iconv -f utf-8 \
+        -t iso-8859-1 \
+  sayHello.hs &gt; dizOlá.hs
+$ file dizOlá.hs
+$ runhaskell dizOlá.hs
+      </code></pre>
+    </div>
+
+    <div><strong>CABUM!</strong></div>
+
+    <div>
+      <em>Identificadores</em><br>
+      Um identificador consiste de:
+      <ul>
+        <li>Uma letra (Unicode), seguida de</li>
+        <li>zero ou mais letras ou</li>
+        <li>dígitos ou</li>
+        <li>plicas (sim...)</li>
+        <li>o "_" é considerado uma letra</li>
+      </ul>
+    </div>
+
+    <div>
+      <em>Identificadores</em><br>
+      Exemplos:
+      <pre><code class="hs">
+let p'eraí = "Espera aí"
+    ç = "cedilha"
+    dia'25'12'2018 = 20181225
+    __ x = -x
+      </code></pre>
+      Nota: caso especial &ndash; identificadores
+      começados por "_"
+    </div>
+
+    <div>
+      <em>Identificadores</em><br>
+      São distinguidos lexicograficamente em dois <em>namespaces</em>:
+      <ul>
+        <li>Os que começam com caixa-baixa: <a>identificadores de variáveis</a></li>
+        <li>Os que começam com caixa-alta: <a>identificadores de Construtores</a></li>
+        <li>o "_" é uma letra caixa-baixa mas não pode aparecer isolado...</li>
+      </ul>
+    </div>
+
+    <div>
+      <em>Identificadores</em><br>
+      Identificadores reservados:
+      <pre><code class="text">
+reservedId →
+    case | class | data | default
+  | deriving | do | else | foreign
+  | if | import | in | infix | infixl
+  | infixr | instance | let | module
+  | newtype | of | then | type | where | _
+      </code></pre>
+    </div>
+
+    <div>
+      <em>Identificadores</em><br>
+      Símbolos especiais:
+      <pre><code class="text">
+special → ( | ) | , | ; 
+        | [ | ] | ` | { | }
+      </code></pre>
+    </div>
+
+    <div>
+      <em>Identificadores</em><br>
+      Operadores reservados (já agora):
+      <pre><code class="text">
+reservedop →  .. | : | :: | = | \ | | 
+           |  &lt;- | -&gt; | @ | ~ | =&gt;
+      </code></pre>
+      Nota: Ver Haskell Report sobre <em>Operator Symbols</em>
+      (e a gramática do Haskell em geral)
+    </div>
+
+    <div>
+      <em>Comentários</em><br>
+      <ul>
+        <li>Single-line: "--"</li>
+        <li>Nested: "{-" ... "-}"</li>
+      </ul>
+      São considerados <em>whitespace</em> e não são lexicamente analizados.
+    </div>
+
+    <div>
+      <em>Estrutura de programas</em>
+      <strong>Haskell</strong>
+      <ul>
+        <li>Top Level: Módulos (fornecem <em>namespaces</em> e são a base da reutilização em programas de "grande dimensão"</li>
+        <li>Declarações: um módulo consiste de uma série de declarações</li>
+        <li>Expressões: Denotam "valores" e têm um tipo estático</li>
+        <li>Bottom Level: estrutura lexical</li>
+      </ul>
+    </div>
+
+    <div>
+      <em>Estrutura de programas:</em> <strong>Módulos</strong>
+      <pre><code class="text">
+module → 'module' &lt;modid&gt; [&lt;exports&gt;] 'where' &lt;body&gt;
+       | &lt;body&gt;
+body → { &lt;impdecls&gt; ; &lt;topdecls&gt; }
+     | { &lt;impdecls&gt; }
+     | { &lt;topdecls&gt; }
+ 
+impdecls → impdecl1 ; … ; impdecln     (n ≥ 1)
+topdecls → topdecl1 ; … ; topdecln     (n ≥ 1) 
+      </code></pre>
+    </div>
+
+    <div>
+      <em>Estrutura de programas:</em> <strong>Declarações</strong>
+      <pre><code class="text">
+topdecl → 'type'     simpletype = type
+        | 'data'     [context =&gt;] simpletype [= constrs] [deriving]
+        | 'newtype'  [context =&gt;] simpletype = newconstr [deriving]
+        | 'class'    [scontext =&gt;] tycls tyvar [where cdecls]
+        | 'instance' [scontext =&gt;] qtycls inst [where idecls]
+        | 'default'  (type1 , … , typen)       (n ≥ 0)
+        | 'foreign'  fdecl
+        | decl  (funções e assinaturas)
+      </code></pre>
+      Declarações definem valores, tipos, classes e <em>"fixity information"</em>
+    </div>
+
+    <div>
+      <em>Estrutura de programas:</em> <strong>Expressões</strong><br>
+      <pre><code class="text">
+exp → infixexp :: [context =&gt;] type     (expression type signature)
+    | infixexp
+ 
+infixexp → lexp qop infixexp     (infix operator application)
+         | - infixexp            (prefix negation)
+         | lexp
+
+...
+      </code></pre>
+      <a href="https://www.haskell.org/onlinereport/haskell2010/haskellch3.html#x8-220003" target="_blank">it's just too much...</a>
+    </div>
+
+    <div>
+      <em>Estrutura de programas:</em>
+      <strong>Regra de layout ou “off-side”</strong><br>
+      Haskell permite a omissão de chavetas ou pontos-e-vírgula especificadas em algumas produções da gramática.<br>
+      Informalmente a regra <em>off-side</em> tem efeito sempre que é omitida depois de
+      <code><pre>
+where | let | do | of
+      </pre></code>
+      Esta regra é reminiscente de outras linguagens como Python ou Markdown e pode ser um pouco "<em>tricky</em>"...
+    </div>
+
+    <div>
+      <em>Estrutura de programas:</em>
+      <strong>Regra de layout ou “off-side”</strong><br>
+      <pre><code class="hs">
+let x = 1
+    y = 3
+      </code></pre>
+é o mesmo que
+      <pre><code class="hs">
+let { x = 1; y = 3 }
+      </code></pre>
+    </div>
+
+    <div>
+      <em>Estrutura de programas:</em>
+      <strong>Regra de layout ou “off-side”</strong><br>
+      <pre><code class="hs">
+let x = 1
+    y = 3
+      </code></pre>
+ou até
+      <pre><code class="hs">
+let { x = 1
+; y = 3 }
+      </code></pre>
+    </div>
+
+    <div><a>Definindo Funções</a></div>
+
+    <div>
+      Existem <em>vários mecanismos</em>
+      para definir funções que <em>escolhem</em>
+      entre vários resultados possíveis:
+      <ul>
+        <li>Usando <a>Conditional Expressions</a></li>
+        <li>Usando <a>Guarded Equations</a></li>
+        <li>Usando <a>Pattern Matching</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <a>Conditional Expressions</a>
+      <pre><code class="hs">
+abs :: Int -&gt; Int
+abs n = if n &gt;= 0 then n else -n
+      </code></pre>
+      Nota: todos os IFs tem um ELSE em <strong>Haskell</strong>!
+      Não sofre do <em>"dangling else problem"</em>...
+    </div>
+
+    <div>
+      <a>Guarded Equations</a>
+      <pre><code class="hs">
+abs :: Int -&gt; Int
+abs n | n &gt; 0      =  n
+      | otherwise = -n
+      </code></pre>
+      Reminiscente das definições matemáticas usando chavetas...
+    </div>
+
+    <div>
+      <a>Pattern Matching</a><br>
+      As funções também podem ser definidas usando <em>Pattern Matching</em>,
+      um mecanismo em que uma sequência de <em>expressões sintáticas</em> chamadas
+      de <a>Padrões</a> é utilizada para "escolher" entre uma sequência de resultados
+      do mesmo tipo:
+      <ul>
+        <li>Se há concordância com primeiro padrão então o primeiro resultado é o escolhido</li>
+        <li>Senão, se houver concordância com o segundo, é esse o escolhido</li>
+        <li>... e assim sucessivamente</li>
+      </ul>
+    </div>
+
+    <div>
+      <a>Pattern Matching</a><br>
+      <pre><code class="hs">
+land :: Bool -&gt; Bool -&gt; Bool
+land True True   = True
+land True False  = False
+land Fasle True  = False
+land False False = False
+      </code></pre>
+    </div>
+
+    <div>
+      <a>Pattern Matching</a><br>
+      Ou melhor...
+      <pre><code class="hs">
+land :: Bool -&gt; Bool -&gt; Bool
+land True True = True
+land _ _       = False
+      </code></pre>
+    </div>
+
+    <div>
+      <a>Tuple Patterns</a><br>
+      Um tuplo de padrões é ele próprio um padrão:
+      <pre><code class="hs">
+fst :: (a,b) -&gt; a
+fst (x,_) = x
+
+snd :: (a,b) -&gt; b
+snd (_,y) = y
+      </code></pre>
+    </div>
+
+    <div>
+      <a>List Patterns</a><br>
+      Da mesma forma, uma lista de padrões é um ela própria um padrão.
+      Por exemplo, uma função que verifica se uma String tem exatamente
+      três carateres e começa por um 'a':
+      <pre><code class="hs">
+      tresta :: [Char] -&gt; Bool
+      tresta ['a', _, _] = True
+      tresta _           = False
+      </code></pre>
+    </div>
+
+    <div>
+      <a>List Patterns</a><br>
+      Embora uma lista seja representada por [...], de facto este
+      <em>não é</em> o seu construtor primitivo.<br>
+      Quando escrevemos <pre>[1, 2, 3]</pre> de facto estamos apenas a abreviar
+      a forma <pre>1:(2:(3:[]))</pre> em que ":" é o operador
+      de construção (Cons) de listas (<em>Oh dear Lisp...</em>)
+    </div>
+
+    <div>
+      <a>List Patterns</a><br>
+      Além de usado para construir listas, o operador Cons (:)
+      pode também ser usado para concordância de padrões.<br>
+      A nossa função "tresta" pode então ser tornada mais geral:
+      <em>Testar se qualquer lista de Chars começa com um 'a'</em>
+      <pre><code class="hs">
+testa :: [Char] -&gt; Bool
+testa ['a':_] = True
+testa _       = False
+      </code></pre>
+    </div>
+
+    <div>
+      <a>Lambda Expressions</a><br>
+      λ &mdash; outra maneira de definir funções (<em>nameless</em>).
+      <pre><code class="hs">
+add :: Int -&gt; Int -&gt; Int
+add x y = x + y
+
+-- as lambda:
+add :: Int -&gt; (Int -&gt; Int)
+add = \x -&gt; (\y -&gt; x + y)
+      </code></pre>
+      É interessante notar que esta segunda definição salienta
+      que "add" é uma função que aceita um Int e retorna uma
+      função que aceita outro Int e devolve a soma destes dois.
+      <em>(Mais sobre Lambda Expressions noutra sessão.)</em>
+    </div>
+
+    <div>
+      <a>Operator Sections</a>
+      <pre><code class="hs">
+(∧) = \x -&gt; (\y -&gt; x &amp;&amp; y)
+      </code></pre>
+      Acabaram-se as pilhas... Mais sobre isto noutro dia.
+    </div>
+
+    <div><a>That's Aλλ Folks!</a></div>
+
+  </body>
+</html>
