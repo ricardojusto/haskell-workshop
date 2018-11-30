@@ -252,87 +252,109 @@ abs n | n &gt; 0      =  n
     </div>
 
     <div>
-      <a>Pattern Matching</a>
+      <a>Pattern Matching</a><br>
+      As funções também podem ser definidas usando <em>Pattern Matching</em>,
+      um mecanismo em que uma sequência de <em>expressões sintáticas</em> chamadas
+      de <a>Padrões</a> é utilizada para "escolher" entre uma sequência de resultados
+      do mesmo tipo:
+      <ul>
+        <li>Se há concordância com primeiro padrão então o primeiro resultado é o escolhido</li>
+        <li>Senão, se houver concordância com o segundo, é esse o escolhido</li>
+        <li>... e assim sucessivamente</li>
+      </ul>
     </div>
 
     <div>
-      <a>Tuple Patterns</a>
+      <a>Pattern Matching</a><br>
+      <pre><code class="hs">
+land :: Bool -&gt; Bool -&gt; Bool
+land True True   = True
+land True False  = False
+land Fasle True  = False
+land False False = False
+      </code></pre>
     </div>
 
     <div>
-      <a>List Patterns</a>
+      <a>Pattern Matching</a><br>
+      Ou melhor...
+      <pre><code class="hs">
+land :: Bool -&gt; Bool -&gt; Bool
+land True True = True
+land _ _       = False
+      </code></pre>
     </div>
 
-    <div><a>Guarded Equations</a></div>
-
-    <div><a>Lambda Expressions</a></div>
-
-    <div><a>Operator Sections</a></div>
-
-    <div><a>Datatypes</a>
+    <div>
+      <a>Tuple Patterns</a><br>
+      Um tuplo de padrões é ele próprio um padrão:
       <pre><code class="hs">
-data Maybe a = Nothing | Just a
-      </code></pre>
-    <!-- Why define Maybe?
+fst :: (a,b) -&gt; a
+fst (x,_) = x
 
-        `Maybe` is a simple and useful datatype
-        that will be helpful in explaining the
-        following concepts like pattern matching
-        and that can be used for building knowledge
-        over it by defining diferent instances that
-        make `Maybe` more powerful as we progress.
-    -->
+snd :: (a,b) -&gt; b
+snd (_,y) = y
+      </code></pre>
     </div>
 
-    <div><a>Pattern Matching</a></div>
     <div>
+      <a>List Patterns</a><br>
+      Da mesma forma, uma lista de padrões é um ela própria um padrão.
+      Por exemplo, uma função que verifica se uma String tem exatamente
+      três carateres e começa por um 'a':
       <pre><code class="hs">
-f :: Maybe Int -&gt; Int
-f maybe = case maybe of Nothing  -&gt; 404
-                        (Just n) -&gt; n
+      tresta :: [Char] -&gt; Bool
+      tresta ['a', _, _] = True
+      tresta _           = False
       </code></pre>
-    <!-- Sample of some simple pattern matching
-        Maybe the example could be improved?
-    -->
-   </div>
-    <div>
-      <pre><code class="hs">
-Prelude&gt; case Nothing of Nothing -&gt; 0
-Prelude&gt; case Nothing of (Just n) -&gt; 0
-      </code></pre>
-    <!-- Here we can show that these are still
-        expressions that can be composed over 
-        *and* that unlike Elm it does allow the
-        case expression for it now to express
-        all possible branches. 
-        If the case expression fails it raises
-        a runtime exception
-    -->
-   </div>
+    </div>
 
-    <div><a>Conditional Expressions</a></div>
     <div>
-      <pre><code class="hs">
-iff :: Bool -&gt; a -&gt; a -&gt; a
-iff cond rTrue rFalse = case cond of True  -&gt; rTrue
-                                     False -&gt; rFalse
-      </code></pre>
-    <!-- if syntax sugar
-        We can explain how the if expression
-        is just a sugar coat over this function.
-        This function and it's signture also
-        tells a lot about its semantics.
-        It can't receive truthy values, only booleans;
-        it always requires to receive arguments of the same type;
-        it returns always the same type as the branches
-    -->
-     </div>
+      <a>List Patterns</a><br>
+      Embora uma lista seja representada por [...], de facto este
+      <em>não é</em> o seu construtor primitivo.<br>
+      Quando escrevemos <pre>[1, 2, 3]</pre> de facto estamos apenas a abreviar
+      a forma <pre>1:(2:(3:[]))</pre> em que ":" é o operador
+      de construção (Cons) de listas (<em>Oh dear Lisp...</em>)
+    </div>
+
     <div>
-      <em>Conditional Expressions:</em><br>
+      <a>List Patterns</a><br>
+      Além de usado para construir listas, o operador Cons (:)
+      pode também ser usado para concordância de padrões.<br>
+      A nossa função "tresta" pode então ser tornada mais geral:
+      <em>Testar se qualquer lista de Chars começa com um 'a'</em>
       <pre><code class="hs">
-      (if True then "It's true!" else "meh") == (iff True "It's true!" "meh")
+testa :: [Char] -&gt; Bool
+testa ['a':_] = True
+testa _       = False
       </code></pre>
-     </div>
+    </div>
+
+    <div>
+      <a>Lambda Expressions</a><br>
+      λ &mdash; outra maneira de definir funções (<em>nameless</em>).
+      <pre><code class="hs">
+add :: Int -&gt; Int -&gt; Int
+add x y = x + y
+
+-- as lambda:
+add :: Int -&gt; (Int -&gt; Int)
+add = \x -&gt; (\y -&gt; x + y)
+      </code></pre>
+      É interessante notar que esta segunda definição salienta
+      que "add" é uma função que aceita um Int e retorna uma
+      função que aceita outro Int e devolve a soma destes dois.
+      <em>(Mais sobre Lambda Expressions noutra sessão.)</em>
+    </div>
+
+    <div>
+      <a>Operator Sections</a>
+      <pre><code class="hs">
+(∧) = \x -&gt; (\y -&gt; x &amp;&amp; y)
+      </code></pre>
+      Acabaram-se as pilhas... Mais sobre isto noutro dia.
+    </div>
 
     <div><a>That's Aλλ Folks!</a></div>
 
