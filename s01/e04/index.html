@@ -23,7 +23,7 @@
 
     <div>
       <p class="no-break"><em>Haskell <code>s01e04</code></em></p>
-      <p>Defining Functions</p>
+      <p>Introdução à syntaxe e funções</p>
     </div>
 
     <div><a>Syntax</a></div>
@@ -48,6 +48,226 @@ $ runhaskell dizOlá.hs
 
     <div><strong>CABUM!</strong></div>
 
+    <div>
+      <em>Identificadores</em><br>
+      Um identificador consiste de:
+      <ul>
+        <li>Uma letra (Unicode), seguida de</li>
+        <li>zero ou mais letras ou</li>
+        <li>dígitos ou</li>
+        <li>plicas (sim...)</li>
+        <li>o "_" é considerado uma letra</li>
+      </ul>
+    </div>
+
+    <div>
+      <em>Identificadores</em><br>
+      Exemplos:
+      <pre><code class="hs">
+let p'eraí = "Espera aí"
+    ç = "cedilha"
+    dia'25'12'2018 = 20181225
+    __ x = -x
+      </code></pre>
+      Nota: caso especial &ndash; identificadores
+      começados por "_"
+    </div>
+
+    <div>
+      <em>Identificadores</em><br>
+      São distinguidos lexicograficamente em dois <em>namespaces</em>:
+      <ul>
+        <li>Os que começam com caixa-baixa: <a>identificadores de variáveis</a></li>
+        <li>Os que começam com caixa-alta: <a>identificadores de Construtores</a></li>
+        <li>o "_" é uma letra caixa-baixa mas não pode aparecer isolado...</li>
+      </ul>
+    </div>
+
+    <div>
+      <em>Identificadores</em><br>
+      Identificadores reservados:
+      <pre><code class="text">
+reservedId →
+    case | class | data | default
+  | deriving | do | else | foreign
+  | if | import | in | infix | infixl
+  | infixr | instance | let | module
+  | newtype | of | then | type | where | _
+      </code></pre>
+    </div>
+
+    <div>
+      <em>Identificadores</em><br>
+      Símbolos especiais:
+      <pre><code class="text">
+special → ( | ) | , | ; 
+        | [ | ] | ` | { | }
+      </code></pre>
+    </div>
+
+    <div>
+      <em>Identificadores</em><br>
+      Operadores reservados (já agora):
+      <pre><code class="text">
+reservedop →  .. | : | :: | = | \ | | 
+           |  &lt;- | -&gt; | @ | ~ | =&gt;
+      </code></pre>
+      Nota: Ver Haskell Report sobre <em>Operator Symbols</em>
+      (e a gramática do Haskell em geral)
+    </div>
+
+    <div>
+      <em>Comentários</em><br>
+      <ul>
+        <li>Single-line: "--"</li>
+        <li>Nested: "{-" ... "-}"</li>
+      </ul>
+      São considerados <em>whitespace</em> e não são lexicamente analizados.
+    </div>
+
+    <div>
+      <em>Estrutura de programas</em>
+      <strong>Haskell</strong>
+      <ul>
+        <li>Top Level: Módulos (fornecem <em>namespaces</em> e são a base da reutilização em programas de "grande dimensão"</li>
+        <li>Declarações: um módulo consiste de uma série de declarações</li>
+        <li>Expressões: Denotam "valores" e têm um tipo estático</li>
+        <li>Bottom Level: estrutura lexical</li>
+      </ul>
+    </div>
+
+    <div>
+      <em>Estrutura de programas:</em> <strong>Módulos</strong>
+      <pre><code class="text">
+module → 'module' &lt;modid&gt; [&lt;exports&gt;] 'where' &lt;body&gt;
+       | &lt;body&gt;
+body → { &lt;impdecls&gt; ; &lt;topdecls&gt; }
+     | { &lt;impdecls&gt; }
+     | { &lt;topdecls&gt; }
+ 
+impdecls → impdecl1 ; … ; impdecln     (n ≥ 1)
+topdecls → topdecl1 ; … ; topdecln     (n ≥ 1) 
+      </code></pre>
+    </div>
+
+    <div>
+      <em>Estrutura de programas:</em> <strong>Declarações</strong>
+      <pre><code class="text">
+topdecl → 'type'     simpletype = type
+        | 'data'     [context =&gt;] simpletype [= constrs] [deriving]
+        | 'newtype'  [context =&gt;] simpletype = newconstr [deriving]
+        | 'class'    [scontext =&gt;] tycls tyvar [where cdecls]
+        | 'instance' [scontext =&gt;] qtycls inst [where idecls]
+        | 'default'  (type1 , … , typen)       (n ≥ 0)
+        | 'foreign'  fdecl
+        | decl  (funções e assinaturas)
+      </code></pre>
+      Declarações definem valores, tipos, classes e <em>"fixity information"</em>
+    </div>
+
+    <div>
+      <em>Estrutura de programas:</em> <strong>Expressões</strong><br>
+      <pre><code class="text">
+exp → infixexp :: [context =&gt;] type     (expression type signature)
+    | infixexp
+ 
+infixexp → lexp qop infixexp     (infix operator application)
+         | - infixexp            (prefix negation)
+         | lexp
+
+...
+      </code></pre>
+      <a href="https://www.haskell.org/onlinereport/haskell2010/haskellch3.html#x8-220003" target="_blank">it's just too much...</a>
+    </div>
+
+    <div>
+      <em>Estrutura de programas:</em>
+      <strong>Regra de layout ou “off-side”</strong><br>
+      Haskell permite a omissão de chavetas ou pontos-e-vírgula especificadas em algumas produções da gramática.<br>
+      Informalmente a regra <em>off-side</em> tem efeito sempre que é omitida depois de
+      <code><pre>
+where | let | do | of
+      </pre></code>
+      Esta regra é reminiscente de outras linguagens como Python ou Markdown e pode ser um pouco "<em>tricky</em>"...
+    </div>
+
+    <div>
+      <em>Estrutura de programas:</em>
+      <strong>Regra de layout ou “off-side”</strong><br>
+      <pre><code class="hs">
+let x = 1
+    y = 3
+      </code></pre>
+é o mesmo que
+      <pre><code class="hs">
+let { x = 1; y = 3 }
+      </code></pre>
+    </div>
+
+    <div>
+      <em>Estrutura de programas:</em>
+      <strong>Regra de layout ou “off-side”</strong><br>
+      <pre><code class="hs">
+let x = 1
+    y = 3
+      </code></pre>
+ou até
+      <pre><code class="hs">
+let { x = 1
+; y = 3 }
+      </code></pre>
+    </div>
+
+    <div><a>Definindo Funções</a></div>
+
+    <div>
+      Existem <em>vários mecanismos</em>
+      para definir funções que <em>escolhem</em>
+      entre vários resultados possíveis:
+      <ul>
+        <li>Usando <a>Conditional Expressions</a></li>
+        <li>Usando <a>Guarded Equations</a></li>
+        <li>Usando <a>Pattern Matching</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <a>Conditional Expressions</a>
+      <pre><code class="hs">
+abs :: Int -&gt; Int
+abs n = if n &gt;= 0 then n else -n
+      </code></pre>
+      Nota: todos os IFs tem um ELSE em <strong>Haskell</strong>!
+      Não sofre do <em>"dangling else problem"</em>...
+    </div>
+
+    <div>
+      <a>Guarded Equations</a>
+      <pre><code class="hs">
+abs :: Int -&gt; Int
+abs n | n &gt; 0      =  n
+      | otherwise = -n
+      </code></pre>
+      Reminiscente das definições matemáticas usando chavetas...
+    </div>
+
+    <div>
+      <a>Pattern Matching</a>
+    </div>
+
+    <div>
+      <a>Tuple Patterns</a>
+    </div>
+
+    <div>
+      <a>List Patterns</a>
+    </div>
+
+    <div><a>Guarded Equations</a></div>
+
+    <div><a>Lambda Expressions</a></div>
+
+    <div><a>Operator Sections</a></div>
 
     <div><a>Datatypes</a>
       <pre><code class="hs">
@@ -113,12 +333,6 @@ iff cond rTrue rFalse = case cond of True  -&gt; rTrue
       (if True then "It's true!" else "meh") == (iff True "It's true!" "meh")
       </code></pre>
      </div>
-
-    <div><a>Guarded Equations</a></div>
-
-    <div><a>Lambda Expressions</a></div>
-
-    <div><a>Operator Sections</a></div>
 
     <div><a>That's Aλλ Folks!</a></div>
 
