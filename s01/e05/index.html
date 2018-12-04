@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+    <title>Haskell Workshop S01E05</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="big.css" rel="stylesheet" type="text/css" />
+    <link href="yari.css" rel="stylesheet" type="text/css" />
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css" rel="stylesheet" type="text/css">
+
+    <script src="big.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/languages/haskell.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+  </head>
+
+  <body class="light">
+
+    <div>
+      <p class="no-break"><em>Haskell <code>s01e05</code></em></p>
+      <p>Time to play</p>
+    </div>
+
+    <div><a>But before</a></div>
+
+    <div>
+      <em>Let's recall</em><br>
+      <pre><code class="hs">
+data List a = Nil | Cons a (List a)
+      </code></pre>
+or after some <em>syntax sugar</em> on top
+      <pre><code class="hs">
+data [a] = [] | (:) a [a]
+      </code></pre>
+or even
+      <pre><code class="hs">
+data [a] = [] | a : [a]
+      </code></pre>
+    </div>
+
+    <div>
+        <em>Recursive structure</em>
+        <img src="./list.svg" alt="list call graph">
+    </div>
+
+
+    <div><a>Let's warmup with GHCi</a></div>
+
+    <div>
+      <pre><code class="shell">
+Prelude&gt; list1 = []
+Prelude&gt; list1 = [1]
+Prelude&gt; list1 = [1, 2, 3]
+Prelude&gt; list2 = 0 : list1
+Prelude&gt; list3 = list1 ++ list2
+      </code></pre>
+    </div>
+
+    <div><strong>We're ready!</strong></div>
+
+   <div>
+      <em>Problem #1:</em>
+      Find the last element of a list. 
+      <pre><code class="hs">
+Prelude&gt; :type myLast
+myLast :: [a] -&gt; a
+
+Prelude&gt; myLast [1,2,3,4]
+4
+Prelude&gt; myLast ['x','y','z']
+'z'
+      </code></pre>
+    </div>
+
+   <div>
+      <em>Problem #1:</em><br><br>
+        Possibilities:
+        <ul>
+            <li>There's no elements</li>
+            <li>There's only one element</li>
+            <li>There's many elements</li>
+        </ul>
+    </div>
+
+   <div>
+      <em>Problem #1:</em><br><br>
+        Possibilities:
+        <ul>
+            <li><strike>There's no elements</strike></li>
+            <li>There's only one element</li>
+            <li>There's many elements</li>
+        </ul>
+    </div>
+
+   <div>
+      <em>Problem #1:</em><br><br>
+      <strong>Recursion</strong>
+
+      <pre><code class="hs">
+myLast :: [a] -&gt; a
+myLast (_:xs) = myLast xs
+      </code></pre>
+    </div>
+
+   <div>
+      <em>Problem #1:</em><br><br>
+      <strong>Recursion - Trace</strong>
+
+      <pre><code class="hs">
+myLast [1, 2, 3]
+myLast (1 : 2 : 3 : [])
+myLast (2 : 3 : [])
+myLast (3 : [])
+myLast []  -- Oops. We've gone too far.
+      </code></pre>
+    </div>
+
+   <div>
+      <em>Problem #1:</em><br><br>
+      <strong>Recursion - Stopping Condition</strong>
+
+      <pre><code class="hs">
+myLast :: [a] -&gt; a
+myLast (x:[]) = x  -- same as `myLast [x]`
+myLast (_:xs) = myLast xs
+      </code></pre>
+    </div>
+
+   <div>
+      <em>Problem #1:</em><br><br>
+      <strong>Recursion - Trace</strong>
+
+      <pre><code class="hs">
+myLast [1, 2, 3]
+myLast (1 : 2 : 3 : [])
+myLast (2 : 3 : [])
+myLast (3 : []) -- Matched stopping condition!
+3
+      </code></pre>
+    </div>
+
+
+   <div>
+      <em>Problem #2:</em>
+      Find the second to last element of a list. 
+      <pre><code class="hs">
+Prelude&gt; :type myLast
+secondToLast :: [a] -&gt; a
+
+Prelude&gt; secondToLast [1, 2, 3, 4, 5]
+4
+Prelude&gt; secondToLast ['a' .. 'z']
+'y'
+      </code></pre>
+  </div>
+
+   <div>
+      <em>Problem #2.5:</em>
+      Wait. Go back. What that that?
+      <pre><code class="hs">
+Prelude&gt; secondToLast ['a' .. 'z']
+'y'
+      </code></pre>
+
+      The syntax <code style="hs">[a .. b]</code> is synonym to enumFromTo.
+      Let's try to define something similar.
+  </div>
+
+   <div>
+      <em>Problem #2.5:</em>
+      intFromTo
+      <pre><code class="hs">
+Prelude&gt; :type intFromTo
+intFromTo :: Int -&gt; Int -&gt; [Int]
+
+Prelude&gt; intFromTo 0 4
+[0, 1, 2, 3, 4]
+Prelude&gt; intFromTo 4 4
+[4]
+Prelude&gt; intFromTo 4 0
+[]
+      </code></pre>
+  </div>
+   <div>
+      <em>Problem #2.5:</em>
+      intFromTo<br><br>
+
+        Possibilities:
+        <ul>
+            <li>There's elements between <em>a</em> and <em>b</em></li>
+            <li>There's no elements between <em>a</em> and <em>b</em></li>
+        </ul>
+  </div>
+
+   <div>
+      <em>Problem #2.5:</em>
+      intFromTo
+      <pre><code class="hs">
+intFromTo :: Int -&gt; Int -&gt; Int
+intFromTo a b = a : (intFromTo (a + 1) b)
+      </code></pre>
+  </div>
+
+   <div>
+      <em>Problem #2.5:</em>
+      intFromTo
+      <pre><code class="hs">
+intFromTo :: Int -&gt; Int -&gt; Int
+intFromTo a b 
+    | a &lt;= b    = a : (intFromTo (a + 1) b)
+    | otherwise = []
+      </code></pre>
+
+      How to transform this function into <code>enumFromTo</code>?
+  </div>
+
+   <div>
+      <em>Problem #3:</em>
+      Find the K'th element of a list.
+      <pre><code class="hs">
+Prelude&gt; :type elementAt
+elementAt :: [a] -&gt; Int -&gt; a
+
+Prelude&gt; elementAt [0,1,2,3] 0
+0
+Prelude&gt; elementAt [1,2,3] 2
+3
+Prelude&gt; elementAt "haskell" 4
+'e'
+      </code></pre>
+  </div>
+
+   <div>
+      <em>Builtins</em>
+
+      <pre><code class="hs">
+last : [a] -&gt; a          --equivalent to myLast
+
+(last . init) : [a] -&gt; a --equivalent to secondToLast
+
+(!!) : [a] -&gt; Int -&gt; a   --equivalent to elementAt
+      </code></pre>
+  </div>
+
+    <div><a>That's Aλλ Folks!</a></div>
+
+    <div>
+        <strong>For more fun google for:</strong>
+         <br>
+        <a><code>99 haskell</code></a>
+        <br>
+        <br>
+        <a>URL: https://wiki.haskell.org/99_questions/1_to_10</a>
+        <em><small style='font-size: 0.4em;'>Solutions included</small></em>
+    </div>
+
+
+  </body>
+</html>
