@@ -18,7 +18,7 @@ tests = testGroup "Problems"
     , problem4Spec
     , problem5Spec
     , problem6Spec
-    -- , problem7Spec
+    , problem7Spec
     , problem8Spec
     , problem9Spec
     , problem10Spec
