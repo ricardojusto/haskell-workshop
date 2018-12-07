@@ -50,7 +50,7 @@ Find the number of elements of a list.
 >>> myLength "Hello, world!"
 13
 -}
-myLength :: Integral n => [a] -> n
+myLength :: [a] -> Int
 myLength = undefined
 
 
@@ -76,8 +76,8 @@ True
 >>> isPalindrome [1,2,4,8,16,8,4,2,1]
 True
 -}
-isPalindrome :: [a] -> Bool
-isPalindrome = undefined
+isPalindrome :: (Eq a) => [a] -> Bool
+isPalindrome xs = undefined
 
 
 -- |We have to define a new data type, because lists in Haskell are homogeneous. 
@@ -103,7 +103,7 @@ If a list contains repeated elements they should be replaced with a single copy 
 >>> compress "aaaabccaadeeee"
 "abcade"
 -}
-compress :: [a] -> [a]
+compress :: (Eq a) => [a] -> [a]
 compress = undefined
 
 {-|
@@ -112,7 +112,7 @@ Pack consecutive duplicates of list elements into sublists. If a list contains r
 >>> pack ['a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 'e', 'e']
 ["aaaa","b","cc","aa","d","eeee"]
 -}
-pack :: [a] -> [[a]]
+pack :: (Eq a) => [a] -> [[a]]
 pack = undefined
 
 {-|
@@ -121,19 +121,5 @@ Run-length encoding of a list. Use the result of problem P09 to implement the so
 >>> encode "aaaabccaadeeee"
 [(4,'a'),(1,'b'),(2,'c'),(2,'a'),(1,'d'),(4,'e')]
 -}
-encode :: [a] -> [(Int, a)]
+encode :: (Eq a) => [a] -> [(Int, a)]
 encode = undefined
-
-
-
-problem1 = myLast
-problem2 = myButLast
-problem3 = elementAt
-problem4 = myLength
-problem5 = myReverse
-problem6 = isPalindrome
-problem7 = flatten
-problem8 = compress
-problem9 = pack
-problem10 = encode
-
