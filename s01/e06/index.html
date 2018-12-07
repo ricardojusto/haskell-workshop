@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+    <title>Haskell Workshop S01E06</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="big.css" rel="stylesheet" type="text/css" />
+    <link href="yari.css" rel="stylesheet" type="text/css" />
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css" rel="stylesheet" type="text/css">
+
+    <script src="big.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/languages/haskell.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+  </head>
+
+  <body class="light">
+
+    <div>
+      <p class="no-break"><em>Haskell <code>s01e06</code></em></p>
+      <p>Iluminação Recursiva</p>
+    </div>
+
+    <div>
+      Numa corpo de uma função é <em>normal</em> invocar outras funções.
+    </div>
+
+    <div>
+      Em <strong>Haskell</strong> podemos definir funções que se <em>invocam</em> a si próprias
+    </div>
+
+    <div>
+      Neste caso dizemos que a função <a>recursiva</a>
+    </div>
+
+    <div>
+      Vamos olhar para a função matemática <a>factorial</a>, denotada pelo símbolo <strong>"!"</strong>
+    </div>
+
+    <div>
+      O <strong>factorial (!)</strong> de um inteiro positivo <em>n</em> define-se como
+      <a>o produto de todos os inteiros positivos entre 1 e n</a>
+    </div>
+
+    <div>
+      Assim, temos:
+      <pre>
+1! = 1 × 1         = 1
+
+
+
+
+      </pre>
+    </div>
+
+    <div>
+      Assim, temos:
+      <pre>
+1! = 1 × 1         = 1
+2! = 1 × 2         = 2
+
+
+
+      </pre>
+    </div>
+
+    <div>
+      Assim, temos:
+      <pre>
+1! = 1 × 1         = 1
+2! = 1 × 2         = 2
+3! = 1 × 2 × 3     = 6
+
+
+      </pre>
+    </div>
+
+    <div>
+      <em>Assim, temos:</em>
+      <pre>
+1! = 1 × 1         = 1
+2! = 1 × 2         = 2
+3! = 1 × 2 × 3     = 6
+4! = 1 × 2 × 3 × 4 = 24
+...
+      </pre>
+    </div>
+
+    <div>
+      <em>Generalizando:</em>
+      <pre>
+n! = 1 × 2 × 3 × … × (n-2) × (n-1) × n
+
+      </pre>
+    </div>
+
+    <div>
+      <em>Doutra forma:</em>
+      <pre>
+n! = n × (n-1) × (n-2) × … × 3 × 2 × 1
+
+      </pre>
+    </div>
+
+    <div>
+      <em>Ou, simplificando:</em>
+      <pre>
+n! = n × (n-1) × (n-2) × … × 3 × <strong>2 × 1</strong>
+
+      </pre>
+    </div>
+
+    <div>
+      <em>Ou, simplificando:</em>
+      <pre>
+n! = n × (n-1) × (n-2) × … × 3 × <strong>2 × 1</strong>
+n! = n × (n-1) × (n-2) × … × 3 × 2!
+      </pre>
+    </div>
+
+    <div>
+      <em>Ou, simplificando:</em>
+      <pre>
+n! = n × (n-1) × (n-2) × … × <strong>3 × 2 × 1</strong>
+
+      </pre>
+    </div>
+
+    <div>
+      <em>Ou, simplificando:</em>
+      <pre>
+n! = n × (n-1) × (n-2) × … × <strong>3 × 2 × 1</strong>
+n! = n × (n-1) × (n-2) × … × 3!
+      </pre>
+    </div>
+
+    <div>
+      <em>Ou, simplificando:</em>
+      <pre>
+n! = n × <strong>(n-1) × (n-2) × … × 3 × 2 × 1</strong>
+n! = n × (n-1)!
+      </pre>
+    </div>
+
+    <div>
+      <em>Eis a definição <strong>recursiva</strong> de n!</em>
+      <pre>
+n! = n × (n-1)!
+      </pre>
+    </div>
+
+    <div>
+      <em>Em particular</em>
+      <pre>
+1! = 1 × 0!
+      </pre>
+    </div>
+
+    <div>
+      <em>Como, por definição</em>
+      <pre>
+1! = 1 × 1
+      </pre>
+    </div>
+
+    <div>
+      e 1 é o elemento neutro de ✕
+    </div>
+
+    <div>
+      <em>Temos:</em>
+      <pre>
+    1! = 1 × 0! ⇔
+ ⇔   1 = 0!
+      </pre>
+    </div>
+
+    <div>
+      Tudo isto para chegar à definição <pre>0! = 1</pre>
+    </div>
+
+    <div>
+      Agora em <em>Haskell</em>
+    </div>
+
+    <div>
+      Vamos definir a função factorial. <a>Relembremos</a>:
+      <pre>
+n! = n × (n-1)!
+      </pre>
+    </div>
+
+    <div>
+      Tentativa 1:
+      <pre><code class="hs">
+--| n! = n × (n - 1)!
+fac n  = n * fac (n - 1)
+      </code></pre>
+    </div>
+
+    <div>
+      Vamos para o GHCi
+    </div>
+
+    <div>
+      O que está a acontecer?
+      <pre>
+Prelude&gt; fac 2
+      </pre>
+    </div>
+
+    <div>
+      Recorrendo à definição:
+      <pre>
+fac n = n * fac (n - 1)
+
+      </pre>
+    </div>
+
+    <div>
+      Recorrendo à definição:
+      <pre>
+fac 2 = 2 * fac (2 - 1)
+
+      </pre>
+    </div>
+
+    <div>
+      Ou seja:
+      <pre>
+   fac 2 = 2 * fac (2 - 1) ⇔
+ ⇔ fac 2 = 2 * fac 1
+      </pre>
+    </div>
+
+    <div>
+      Então, precisamos de "fac 1"
+      <pre>
+   fac 2 = 2 * fac (2 - 1) ⇔
+ ⇔ fac 2 = 2 * <a>fac 1</a>
+      </pre>
+    </div>
+
+    <div>
+      Recorrendo à definição:
+      <pre>
+fac n = n * fac (n - 1)
+
+      </pre>
+    </div>
+
+    <div>
+      Recorrendo à definição:
+      <pre>
+fac 1 = 1 * fac (1 - 1)
+
+      </pre>
+    </div>
+
+    <div>
+      Ou seja:
+      <pre>
+   fac 1 = 1 * fac (1 - 1)
+ ⇔ fac 1 = 1 * fac 0
+      </pre>
+    </div>
+
+    <div>
+      Então, precisamos de "fac 0"
+      <pre>
+   fac 1 = 1 * fac (1 - 1)
+ ⇔ fac 1 = 1 * <a>fac 0</a>
+      </pre>
+    </div>
+
+    <div>
+      Recorrendo à definição:
+      <pre>
+fac n = n * fac (n - 1)
+
+      </pre>
+    </div>
+
+    <div>
+      Recorrendo à definição:
+      <pre>
+fac 0 = 0 * fac (0 - 1)
+
+      </pre>
+    </div>
+
+    <div>
+      Que é:
+      <pre>
+   fac 0 = 0 * fac (0 - 1) ⇔
+ ⇔ fac 0 = 0 * fac (-1)
+      </pre>
+    </div>
+
+    <div>
+      Então, precisamos de "fac (-1)"
+      <pre>
+   fac 0 = 0 * fac (0 - 1) ⇔
+ ⇔ fac 0 = 0 * <a>fac (-1)</a>
+      </pre>
+    </div>
+
+    <div><em>P'eraí...!</em></div>
+
+    <div>
+      Isto não tem fim à vista...
+    </div>
+
+    <div>
+      Precisamos de um...
+    </div>
+
+    <div>
+      <strong>CASO DE PARAGEM!</strong>
+    </div>
+
+    <div>
+      <em>Lembram-se do<pre>s01e04?</pre></em>
+      Estavam atentos?
+    </div>
+
+    <div>
+      ...
+    </div>
+
+    <div>
+      Existem <em>vários mecanismos</em>
+      para definir funções que <em>escolhem</em>
+      entre vários resultados possíveis:
+      <ul>
+        <li>Usando <a>Conditional Expressions</a></li>
+        <li>Usando <a>Guarded Equations</a></li>
+        <li>Usando <a>Pattern Matching</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <a>Exercício</a>: definir a função <strong>factorial, recursiva</strong>
+      usando cada um destes estilos.<br>
+      <em>O que preferem?</em>
+    </div>
+
+    <div><a>That's Aλλ Folks!</a></div>
+
+  </body>
+</html>
