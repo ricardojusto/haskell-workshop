@@ -51,7 +51,7 @@ Find the number of elements of a list.
 13
 -}
 myLength :: [a] -> Int
-myLength = length
+myLength = undefined
 
 
 {-|
@@ -63,7 +63,7 @@ Reverse a list.
 [4,3,2,1]
 -}
 myReverse :: [a] -> [a]
-myReverse = reverse
+myReverse = undefined
 
 
 {-|
@@ -77,7 +77,7 @@ True
 True
 -}
 isPalindrome :: (Eq a) => [a] -> Bool
-isPalindrome xs = xs == reverse xs
+isPalindrome xs = undefined
 
 
 -- |We have to define a new data type, because lists in Haskell are homogeneous. 

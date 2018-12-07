@@ -1,3 +1,5 @@
+import Data.List
+
 import Test.Tasty
 -- import Test.Tasty.SmallCheck as SC
 import Test.Tasty.QuickCheck as QC
@@ -18,6 +20,8 @@ tests = testGroup "Problems"
     , problem6Spec
     -- , problem7Spec
     , problem8Spec
+    , problem9Spec
+    , problem10Spec
     ]
 
 problem1Spec :: TestTree
@@ -177,7 +181,7 @@ problem8Spec =
 
       testGroup "(checked by QuickCheck)"
         [ QC.testProperty "length >= length . compress" prop_length
-        , QC.testProperty "intersect compressed xs == compressed" prop_length
+        , QC.testProperty "intersect compressed xs == compressed" prop_elements
         ]
      ]
          where prop_length :: [Int] -> Bool
@@ -185,3 +189,51 @@ problem8Spec =
 
                prop_elements :: [Int] -> Bool
                prop_elements xs = intersect (compress xs) xs == (compress xs)
+
+
+problem9Spec :: TestTree
+problem9Spec = 
+     testGroup "Problem #9" 
+     [ testGroup "(checked by HUnit)"
+        [ testCase "Given a list with a single element return a list with that list within" $
+          (pack ['a']) @?= [['a']]
+        , testCase "Given a packable list, pack it" $
+          (pack ['a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 'e', 'e']) @?= (["aaaa","b","cc","aa","d","eeee"])
+        ],
+
+      testGroup "(checked by QuickCheck)"
+        [ QC.testProperty "length >= length . pack" prop_length
+        , QC.testProperty "intersect compressed xs == compressed" prop_elements
+        ]
+     ]
+         where prop_length :: [Int] -> Bool
+               prop_length xs = length xs >= (length . pack) xs
+
+               prop_elements :: [Int] -> Bool
+               prop_elements xs = concat (pack xs) == xs
+
+
+
+problem10Spec :: TestTree
+problem10Spec = 
+     testGroup "Problem #10" 
+     [ testGroup "(checked by HUnit)"
+        [ testCase "Given a list with many elements return RLE " $
+          (encode "aaaabccaadeeee") @?= ([(4, 'a'),(1, 'b'),(2, 'c'),(2, 'a'),(1, 'd'),(4, 'e')] :: [(Int, Char)])
+        ],
+
+      testGroup "(checked by QuickCheck)"
+        [ QC.testProperty "length >= length . compress" prop_length
+        , QC.testProperty "intersect compressed xs == compressed" prop_length
+        ]
+     ]
+         where prop_length :: [Int] -> Bool
+               prop_length xs = (length xs) == ((sum . (map fst) . encode) xs)
+
+               prop_elements :: [Int] -> Bool
+               prop_elements xs = (intersect (map snd (encode xs)) xs) == (map snd (encode xs))
+{-|
+>>> 
+
+-}
+
