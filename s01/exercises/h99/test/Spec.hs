@@ -224,7 +224,7 @@ problem10Spec =
 
       testGroup "(checked by QuickCheck)"
         [ QC.testProperty "length >= length . compress" prop_length
-        , QC.testProperty "intersect compressed xs == compressed" prop_length
+        , QC.testProperty "intersect compressed xs == compressed" prop_elements
         ]
      ]
          where prop_length :: [Int] -> Bool
