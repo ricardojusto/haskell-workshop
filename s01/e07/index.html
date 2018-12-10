@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+  <title>Haskell Workshop S01E07</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+  <link href="big.css" rel="stylesheet" type="text/css" />
+  <link href="yari.css" rel="stylesheet" type="text/css" />
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css" rel="stylesheet" type="text/css">
+
+  <script src="big.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/languages/haskell.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+
+</head>
+
+<body class="light">
+
+  <div>
+    <p class="no-break"><em>Haskell <code>s01e07</code></em></p>
+    <p>Prelude - Lists</p>
+  </div>
+
+  <div>
+    <em>head</em>
+    <pre>
+      head :: [a] -&gt; a
+      head (x:xs) = x
+      </pre>
+  </div>
+
+  <div>
+    <em>head</em>
+    <pre>
+      head :: [a] -&gt; a
+      head (x:xs) = x
+
+      &gt; head [1, 2]
+      &gt; head (1 : (2 : []))
+      &gt; 1
+      </pre>
+  </div>
+
+  <div>
+    <em>tail</em>
+    <pre>
+      tail :: [a] -&gt; [a]
+      tail (x:xs) = xs
+      </pre>
+  </div>
+
+  <div>
+    <em>tail</em>
+    <pre>
+      tail :: [a] -&gt; [a]
+      tail (x:xs) = xs
+
+      &gt; tail [1, 2, 3, 4]
+      &gt; tail (1 : (2 : (3 : (4 : []))))
+      &gt; (2 : (3 : (4 : [])))
+      &gt; [2, 3, 4]
+      </pre>
+  </div>
+
+  <div>
+    <em>null</em>
+    <pre>
+      null :: [a] -&gt; Bool
+      null [] = True
+      null _ = False
+    </pre>
+  </div>
+
+  <div>
+    <strong>LEVEL UP</strong>
+  </div>
+
+  <div>
+    <em>take</em>
+    <pre>
+      take :: Int -&gt; [a] -&gt; [a]
+      </pre>
+  </div>
+
+  <div>
+    <em>take</em>
+    <pre>
+      take :: Int -&gt; [a] -&gt; [a]
+      take 0 l = []
+      take _ [] = []
+      </pre>
+  </div>
+
+  <div>
+    <em>take</em>
+    <pre>
+      take :: Int -&gt; [a] -&gt; [a]
+      take 0 l = []
+      take _ [] = []
+      take n (h:t) = h : (take (n - 1) t)
+      </pre>
+  </div>
+
+  <div>
+    <em>take</em>
+    <pre>
+      take :: Int -&gt; [a] -&gt; [a]
+      take n l = 
+        case l of
+          []    -&gt; []
+          (h:t) -&gt; case n of
+                        0 -&gt; l
+                        _ -&gt; h : (take (n - 1) t)
+      </pre>
+  </div>
+
+  <div>
+    <em>take</em>
+    <pre>
+
+      &gt; take 2 [1 .. 4]
+      &gt; take 2 [1, 2, 3, 4]
+      &gt; 1 : (take 1 [2, 3, 4])
+      &gt; 1 : 2 : (take 0 [3, 4])
+      &gt; 1 : 2 : []
+      &gt; [1, 2]
+      </pre>
+  </div>
+
+  <div>
+    <em>drop</em>
+    <pre>
+      drop :: Int -&gt; [a] -&gt; [a]
+      </pre>
+  </div>
+
+  <div>
+    <em>drop</em>
+    <pre>
+      drop :: Int -&gt; [a] -&gt; [a]
+      drop 0 l = l
+      drop _ [] = []
+      drop n (h:t) = drop (n - 1) t
+      </pre>
+  </div>
+
+  <div>
+    <em>drop</em>
+    <pre>
+
+      &gt; drop 2 [1, 2, 3, 4]
+      &gt; drop 1 [2, 3, 4]
+      &gt; drop 0 [3, 4]
+      &gt; [3, 4]
+      </pre>
+  </div>
+
+  <div>
+    <em>elem</em>
+    <pre>
+      elem :: (Eq a) =&gt; a -&gt; [a] -&gt; Bool
+    </pre>
+  </div>
+
+  <div>
+    <em>elem</em>
+    <pre>
+      elem :: (Eq a) =&gt; a -&gt; [a] -&gt; Bool
+      elem _ [] = False
+    </pre>
+  </div>
+
+  <div>
+    <em>elem</em>
+    <pre>
+      elem :: (Eq a) =&gt; a -&gt; [a] -&gt; Bool
+      elem _ [] = False
+      elem e (h:t) = e == h || elem e t
+    </pre>
+  </div>
+
+  <div>
+    <em>elem</em>
+    <pre>
+
+      &gt; elem 2 [1, 2, 3, 4]
+      &gt; False || elem 2 [2, 3, 4]
+      &gt; False || True
+      &gt; True
+      </pre>
+  </div>
+
+
+  <div>
+    <em>concat</em>
+    <pre>
+      concat :: [a] -&gt; [a] -&gt; [a]
+    </pre>
+  </div>
+
+  <div>
+    <em>concat</em>
+    <pre>
+      concat :: [a] -&gt; [a] -&gt; [a]
+      concat l [] = l
+      concat [] l = l
+    </pre>
+  </div>
+
+  <div>
+    <em>concat</em>
+    <pre>
+      concat :: [a] -&gt; [a] -&gt; [a]
+      concat l [] = l
+      concat [] l = l
+      concat (h:t) l = h : (concat t l)
+    </pre>
+  </div>
+
+  <div>
+    <em>concat</em>
+    <pre>
+
+      &gt; concat 2 [1, 2, 3, 4]
+      &gt; concat 1 [2, 3, 4]
+      &gt; concat 0 [3, 4]
+      &gt; [3, 4]
+      </pre>
+  </div>
+
+  <div>
+    <strong>LEVEL UP</strong>
+  </div>
+
+  <div>
+    <em>splitAt</em>
+    <pre>
+      splitAt :: Int -&gt; [a] -&gt; ([a], [a])
+    </pre>
+  </div>
+
+  <div>
+    <em>splitAt</em>
+    <pre>
+      splitAt :: Int -&gt; [a] -&gt; ([a], [a])
+      splitAt n xs = (take n xs, drop n xs)
+    </pre>
+  </div>
+
+  <div>
+    <em>splitAt</em>
+    <pre>
+      splitAt :: Int -&gt; [a] -&gt; ([a], [a])
+      splitAt 0 xs = ([], xs)
+      splitAt n (h:t) = 
+        let (before, after) = splitAt (n - 1) t
+        in (h : before, after)
+    </pre>
+  </div>
+
+  <div>
+    <em>ZIP</em>
+  </div>
+
+  <div>
+    <em>zip</em>
+    <pre>
+      zip :: [a] -&gt; [b] -&gt; [(a, b)]
+    </pre>
+  </div>
+
+  <div>
+    <em>zip</em>
+    <pre>
+      zip :: [a] -&gt; [b] -&gt; [(a, b)]
+      zip [] _ = []
+      zip _ [] = []
+      zip (h1:t1) (h2:t2) = (h1, h2) : zip t1 t2
+    </pre>
+  </div>
+
+  <div>
+    <em>span</em>
+    <pre>
+      span (== 2) [2, 2, 2, 4]
+    </pre>
+  </div>
+
+  <div>
+    <em>span</em>
+    <pre>
+      span :: (a -&gt; Bool) -&gt; ([a], [a])
+    </pre>
+  </div>
+
+  <div><a>That's Aλλ Folks!</a></div>
+
+</body>
+
+</html>
