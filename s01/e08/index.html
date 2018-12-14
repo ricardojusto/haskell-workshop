@@ -183,7 +183,7 @@ fold f [] = 0
     <pre><code class="hs">
 fold :: Num a =&gt; (a -&gt; a -&gt; a) -&gt; [a] -&gt; a
 fold f [] = 0
-fold ? ? ?                               .
+fold ? ? ?
     </code></pre>
   </div>
 
@@ -259,6 +259,14 @@ soma = ? ? ? ?
   </div>
 
   <div>
+    <em>Relembrando...</em><br>
+    <pre><code class="hs">
+soma [] = 0
+soma (x:xs) = x + soma xs
+    </code></pre>
+  </div>
+
+  <div>
     <em>Agora...</em><br>
     <pre><code class="hs">
 soma = fold (+)
@@ -302,16 +310,16 @@ length' (x:xs) = 1 + length' xs
   <div>
     <em>Rever e redefinir:</em>
     <pre><code class="hs">
-length'' :: [a] -&gt; Int
-length'' = foldr (\_ n -&gt; n+1) 0
+concat' :: [String] -&gt; String
+concat' = ? ? ? 
     </code></pre>
   </div>
 
   <div>
     <em>Rever e redefinir:</em>
     <pre><code class="hs">
-concat' :: [String] -&gt; String
-concat' = ? ? ? 
+length'' :: [a] -&gt; Int
+length'' = foldr (\_ n -&gt; n+1) 0
     </code></pre>
   </div>
 
