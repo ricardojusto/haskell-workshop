@@ -309,6 +309,14 @@ concat' = ? ? ?
   <div>
     <em>Rever e redefinir:</em>
     <pre><code class="hs">
+concat' :: [String] -&gt; String
+concat' = foldr (++) ""
+    </code></pre>
+  </div>
+
+  <div>
+    <em>Rever e redefinir:</em>
+    <pre><code class="hs">
 length' :: [a] -&gt; Int
 length' [] = 0
 length' (x:xs) = 1 + length' xs
@@ -320,14 +328,6 @@ length' (x:xs) = 1 + length' xs
     <pre><code class="hs">
 length'' :: [a] -&gt; Int
 length'' = foldr (\_ n -&gt; n+1) 0
-    </code></pre>
-  </div>
-
-  <div>
-    <em>Rever e redefinir:</em>
-    <pre><code class="hs">
-concat' :: [String] -&gt; String
-concat' = foldr (++) ""
     </code></pre>
   </div>
 
