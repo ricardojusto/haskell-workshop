@@ -343,7 +343,7 @@ sumlength xs = (sum  xs, length xs)
     <em>Banana Split!<br></em>
     <pre><code class="hs">
 sumlength ::  [Int] -&gt; (Int ,Int)
-sumlength = fold (\n (x, y) &gt; (n+x, 1+y)) (0 ,0)
+sumlength = fold (\n (x, y) -&gt; (n+x, 1+y)) (0 ,0)
     </code></pre>
     Ver: <a href="http://www.cs.nott.ac.uk/~pszgmh/fold.pdf">http://www.cs.nott.ac.uk/~pszgmh/fold.pdf</a>
   </div>
