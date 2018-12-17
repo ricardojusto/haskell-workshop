@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+  <title>Haskell Workshop S01E08</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+  <link href="big.css" rel="stylesheet" type="text/css" />
+  <link href="yari.css" rel="stylesheet" type="text/css" />
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css" rel="stylesheet" type="text/css">
+
+  <script src="big.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/languages/haskell.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+
+</head>
+
+<body class="light">
+
+  <div>
+    <p class="no-break"><em>Haskell <code>s01e09</code></em></p>
+    <p>Funções de Ordem Superior</p>
+  </div>
+
+  <div>
+    <em>Parte</em>
+  </div>
+  <div>
+    <em>2</em>
+  </div>
+
+  <div>
+    Em <em>Haskell</em>, já vimos que toda a função retorna como
+    resultado uma função (<strong>currying</strong>).
+  </div>
+
+  <div>
+    Uma característica distintiva do <strong>paradigma funcional</strong>
+    é a prevalência de funções como <a>map</a>, <a>fold</a>, <a>filter</a>...
+  </div>
+
+  <div>
+    Em <strong>Haskell</strong> além de serem <a>Funções de Ordem Superior</a>,
+    são <em>polimórficas!</em><br>(actuam sobre <u>diferentes</u> tipos de dados.)
+  </div>
+
+  <div>
+    Estas <em>duas características</em> apelam ao <a>mítico</a>...
+    <strong>Programador Preguiçoso!</strong>
+  </div>
+
+  <div>
+    <img src="walnut.jpg" alt="nós">Nós...
+  </div>
+
+  <div>
+    <em>dobros</em>
+    <pre>
+      dobros :: (Num a) =&gt; [a] -&gt; [a]
+
+      &gt; dobros [1, 2, 3]
+      &gt; [2, 4, 6]
+    </pre>
+  </div>
+
+  <div>
+    <strong>Caso de Paragem</strong>
+  </div>
+
+  <div>
+    <em>dobros</em>
+    <pre>
+      dobros :: (Num a) =&gt; [a] -&gt; [a]
+      dobros [] = []
+    </pre>
+  </div>
+
+  <div>
+    <em>dobros</em>
+    <pre>
+      dobros :: (Num a) =&gt; [a] -&gt; [a]
+      dobros [] = []
+      dobros (x:xs) = 
+    </pre>
+  </div>
+  <div>
+    <em>dobros</em>
+    <pre>
+      dobros :: (Num a) =&gt; [a] -&gt; [a]
+      dobros [] = []
+      dobros (x:xs) = (2 * x) : dobros xs
+    </pre>
+  </div>
+  <div>
+    <em>dobros</em>
+    <pre>
+      dobros :: (Num a) =&gt; [a] -&gt; [a]
+      dobros [] = []
+      dobros (x:xs) = (*) 2 x : dobros xs
+    </pre>
+
+    Como já vimos antes,
+    Isto <em>é perfeitamente</em> natural.
+  </div>
+
+  <div>
+    <em>triplos</em>
+    <pre>
+      triplos :: (Num a) =&gt; [a] -&gt; [a]
+
+      &gt; triplos [1, 2, 3]
+      &gt; [3, 6, 9]
+    </pre>
+  </div>
+
+  <div>
+    <strong>Caso de Paragem</strong>
+  </div>
+
+  <div>
+    <em>triplos</em>
+    <pre>
+      triplos :: (Num a) =&gt; [a] -&gt; [a]
+      triplos [] = []
+    </pre>
+  </div>
+
+  <div>
+    <em>triplos</em>
+    <pre>
+      triplos :: (Num a) =&gt; [a] -&gt; [a]
+      triplos [] = []
+      triplos (x:xs) = 
+    </pre>
+  </div>
+  <div>
+    <em>triplos</em>
+    <pre>
+      triplos :: (Num a) =&gt; [a] -&gt; [a]
+      triplos [] = []
+      triplos (x:xs) = (3 * x) : triplos xs
+    </pre>
+  </div>
+
+  <div>
+    <strong>Hmm</strong>
+  </div>
+
+  <div>
+    <strong>Wait a second</strong>
+  </div>
+
+  <div>
+    <em>Se calhar podemos escrever menos código</em>
+  </div>
+
+  <div>
+    <STRONG>MAP</STRONG>
+  </div>
+
+  <div>
+    <em>map</em>
+    <pre>
+      map :: ?? =&gt; ?? -&gt; [a] -&gt; [b]
+    </pre>
+  </div>
+  <div>
+    <em>map</em>
+    <pre>
+      map :: ?? =&gt; ?? -&gt; [a] -&gt; [b]
+      map _ [] = []
+    </pre>
+  </div>
+  <div>
+    <em>map</em>
+    <pre>
+      map :: ?? =&gt; ?? -&gt; [a] -&gt; [b]
+      map _ [] = []
+      map f (x:xs) = 
+    </pre>
+  </div>
+  <div>
+    <em>map</em>
+    <pre>
+      map :: ?? =&gt; ?? -&gt; [a] -&gt; [b]
+      map _ [] = []
+      map f (x:xs) = f x : map f xs
+    </pre>
+  </div>
+  <div>
+    <em>map</em>
+    <pre>
+      map :: ?? -&gt; [a] -&gt; [b]
+      map _ [] = []
+      map f (x:xs) = f x : map f xs
+    </pre>
+  </div>
+  <div>
+    <em>map</em>
+    <pre>
+      map :: (a -&gt; b) -&gt; [a] -&gt; [b]
+      map _ [] = []
+      map f (x:xs) = f x : map f xs
+    </pre>
+  </div>
+  <div>
+    <em>dobros</em>
+    <pre>
+      dobros xs = map (* 2) xs
+    </pre>
+  </div>
+  <div>
+    <em>dobros</em>
+    <pre>
+      dobros = map (* 2)
+    </pre>
+  </div>
+  <div>
+    <pre>
+      x3 = map (* 3)
+      x4 = map (* 4)
+      x5 = map (* 5)
+      x6 = map (* 6)
+      x7 = map (* 7)
+      x8 = map (* 8)
+    </pre>
+  </div>
+
+  <div>
+    <em>Ok, vamos tentar de outra forma</em>
+  </div>
+
+  <div>
+    <em>odds</em>
+    <pre>
+      odds :: (Integral a) =&gt; [a] -&gt; [a]
+      odds :: [a] -&gt; [a]
+
+      &gt; odds [1, 2, 3]
+      &gt; [1, 3]
+    </pre>
+  </div>
+
+  <div>
+    <strong>Caso de Paragem</strong>
+  </div>
+
+  <div>
+    <em>odds</em>
+    <pre>
+      odds :: (Integral a) =&gt; [a] -&gt; [a]
+      odds [] = []
+    </pre>
+  </div>
+
+  <div>
+    <em>odds</em>
+    <pre>
+      odds :: (Integral a) =&gt; [a] -&gt; [a]
+      odds [] = []
+      odds (x:xs) = if odd x then x : odds xs
+                             else     odds xs
+    </pre>
+  </div>
+
+  <div>
+    <em>odds</em>
+    <pre>
+      odds :: (Integral a) =&gt; [a] -&gt; [a]
+      odds [] = []
+      odds (x:xs) = if odd x then x : odds xs
+                             else     odds xs
+    </pre>
+  </div>
+
+  <div>
+    <em>evens</em>
+    <pre>
+      evens :: (Integral a) =&gt; [a] -&gt; [a]
+      evens :: [a] -&gt; [a]
+
+      &gt; evens [1, 2, 3]
+      &gt; [1, 3]
+    </pre>
+  </div>
+
+  <div>
+    <strong>Caso de Paragem</strong>
+  </div>
+
+  <div>
+    <em>evens</em>
+    <pre>
+      evens :: (Integral a) =&gt; [a] -&gt; [a]
+      evens [] = []
+    </pre>
+  </div>
+
+  <div>
+    <em>evens</em>
+    <pre>
+      evens :: (Integral a) =&gt; [a] -&gt; [a]
+      evens [] = []
+      evens (x:xs) = if even x then x : evens xs
+                               else     evens xs
+    </pre>
+  </div>
+
+  <div>
+    <strong>Hmm</strong>
+  </div>
+
+  <div>
+    <strong>Wait a second</strong>
+  </div>
+
+  <div>
+    <em>Se calhar podemos escrever menos código</em>
+  </div>
+
+  <div>
+    <STRONG>FILTER</STRONG>
+  </div>
+
+  <div>
+    <em>filter</em>
+    <pre>
+      filter :: ?? =&gt; ?? -&gt; [a] -&gt; [a]
+    </pre>
+  </div>
+  <div>
+    <em>filter</em>
+    <pre>
+      filter :: ?? =&gt; ?? -&gt; [a] -&gt; [a]
+      filter _ [] = []
+    </pre>
+  </div>
+  <div>
+    <em>filter</em>
+    <pre>
+      filter :: ?? =&gt; ?? -&gt; [a] -&gt; [a]
+      filter _ [] = []
+      filter p (x:xs) = 
+    </pre>
+  </div>
+  <div>
+    <em>filter</em>
+    <pre>
+      filter :: ?? =&gt; ?? -&gt; [a] -&gt; [a]
+      filter _ [] = []
+      filter p (x:xs) = if p x then x : filter p xs
+                               else     filter p xs
+    </pre>
+  </div>
+  <div>
+    <em>filter</em>
+    <pre>
+      filter :: ?? -&gt; [a] -&gt; [a]
+      filter _ [] = []
+      filter p (x:xs) = if p x then x : filter p xs
+                               else     filter p xs
+    </pre>
+  </div>
+  <div>
+    <em>filter</em>
+    <pre>
+      filter :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
+      filter _ [] = []
+      filter p (x:xs) = if p x then x : filter p xs
+                               else     filter p xs
+    </pre>
+  </div>
+
+  <div>
+    <em>Vamos voltar a tentar implementar a odds e a evens</em>
+  </div>
+
+  <div>
+    <pre>
+      odds  = filter odd
+      evens = filter even
+    </pre>
+  </div>
+
+  <div>
+    No Prelude temos vários funções de ordem superior (funções que recebem funções como argumentos) que operam sobre listas como o <strong>map</strong>, <strong>filter</strong>, <strong>fold[lr]</strong>.
+  </div>
+
+  <div>
+    _ :: (a -&gt; Bool) -&gt; [a] -&gt; Bool
+    _ :: (a -&gt; Bool) -&gt; [a] -&gt; Bool
+    _ :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
+    _ :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
+    _ :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
+    _ :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
+    _ :: (a -&gt; b -&gt; c) -&gt; [a] -&gt; [b] -&gt; [c] 
+  </div>
+
+  <div>
+    any :: (a -&gt; Bool) -&gt; [a] -&gt; Bool
+    all :: (a -&gt; Bool) -&gt; [a] -&gt; Bool
+    takeWhile :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
+    dropWhile :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
+    _ :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
+    _ :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
+    _ :: (a -&gt; b -&gt; c) -&gt; [a] -&gt; [b] -&gt; [c] 
+  </div>
+
+  <div>
+    any :: (a -&gt; Bool) -&gt; [a] -&gt; Bool
+    all :: (a -&gt; Bool) -&gt; [a] -&gt; Bool
+    takeWhile :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
+    dropWhile :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
+    span :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
+    break :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
+    _ :: (a -&gt; b -&gt; c) -&gt; [a] -&gt; [b] -&gt; [c] 
+  </div>
+  <div>
+    any :: (a -&gt; Bool) -&gt; [a] -&gt; Bool
+    all :: (a -&gt; Bool) -&gt; [a] -&gt; Bool
+    takeWhile :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
+    dropWhile :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
+    span :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
+    break :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
+    zipWith :: (a -&gt; b -&gt; c) -&gt; [a] -&gt; [b] -&gt; [c] 
+  </div>
+
+  <div>
+    _ :: (a -&gt; b) -&gt; (b -&gt; c) -&gt; a -&gt; c 
+    _ :: (a -&gt; Bool) -&gt; (a -&gt; a) -&gt; a -&gt; a
+  </div>
+
+  <div>
+    (.) :: (a -&gt; b) -&gt; (b -&gt; c) -&gt; a -&gt; c 
+    _ :: (a -&gt; Bool) -&gt; (a -&gt; a) -&gt; a -&gt; a
+  </div>
+  <div>
+    (.) :: (a -&gt; b) -&gt; (b -&gt; c) -&gt; a -&gt; c 
+    until :: (a -&gt; Bool) -&gt; (a -&gt; a) -&gt; a -&gt; a
+  </div>
+
+  <div><a>That's Aλλ Folks!</a></div>
+
+</body>
+
+</html>
