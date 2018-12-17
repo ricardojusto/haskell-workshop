@@ -62,12 +62,12 @@
 
   <div>
     <em>dobros</em>
-    <pre>
-      dobros :: (Num a) =&gt; [a] -&gt; [a]
+    <pre><code class="hs">
+dobros :: (Num a) =&gt; [a] -&gt; [a]
 
-      &gt; dobros [1, 2, 3]
-      &gt; [2, 4, 6]
-    </pre>
+&gt; dobros [1, 2, 3]
+&gt; [2, 4, 6]
+    </code></pre>
   </div>
 
   <div>
@@ -76,35 +76,35 @@
 
   <div>
     <em>dobros</em>
-    <pre>
-      dobros :: (Num a) =&gt; [a] -&gt; [a]
-      dobros [] = []
-    </pre>
+    <pre><code class="hs">
+dobros :: (Num a) =&gt; [a] -&gt; [a]
+dobros [] = []
+    </code></pre>
   </div>
 
   <div>
     <em>dobros</em>
-    <pre>
-      dobros :: (Num a) =&gt; [a] -&gt; [a]
-      dobros [] = []
-      dobros (x:xs) = 
-    </pre>
+    <pre><code class="hs">
+dobros :: (Num a) =&gt; [a] -&gt; [a]
+dobros [] = []
+dobros (x:xs) = 
+    </code></pre>
   </div>
   <div>
     <em>dobros</em>
-    <pre>
-      dobros :: (Num a) =&gt; [a] -&gt; [a]
-      dobros [] = []
-      dobros (x:xs) = (2 * x) : dobros xs
-    </pre>
+    <pre><code class="hs">
+dobros :: (Num a) =&gt; [a] -&gt; [a]
+dobros [] = []
+dobros (x:xs) = (2 * x) : dobros xs
+    </code></pre>
   </div>
   <div>
     <em>dobros</em>
-    <pre>
-      dobros :: (Num a) =&gt; [a] -&gt; [a]
-      dobros [] = []
-      dobros (x:xs) = (*) 2 x : dobros xs
-    </pre>
+    <pre><code class="hs">
+dobros :: (Num a) =&gt; [a] -&gt; [a]
+dobros [] = []
+dobros (x:xs) = (*) 2 x : dobros xs
+    </code></pre>
 
     Como já vimos antes,
     Isto <em>é perfeitamente</em> natural.
@@ -112,12 +112,12 @@
 
   <div>
     <em>triplos</em>
-    <pre>
-      triplos :: (Num a) =&gt; [a] -&gt; [a]
+    <pre><code class="hs">
+triplos :: (Num a) =&gt; [a] -&gt; [a]
 
-      &gt; triplos [1, 2, 3]
-      &gt; [3, 6, 9]
-    </pre>
+&gt; triplos [1, 2, 3]
+&gt; [3, 6, 9]
+    </code></pre>
   </div>
 
   <div>
@@ -126,27 +126,27 @@
 
   <div>
     <em>triplos</em>
-    <pre>
-      triplos :: (Num a) =&gt; [a] -&gt; [a]
-      triplos [] = []
-    </pre>
+    <pre><code class="hs">
+triplos :: (Num a) =&gt; [a] -&gt; [a]
+triplos [] = []
+    </code></pre>
   </div>
 
   <div>
     <em>triplos</em>
-    <pre>
-      triplos :: (Num a) =&gt; [a] -&gt; [a]
-      triplos [] = []
-      triplos (x:xs) = 
-    </pre>
+    <pre><code class="hs">
+triplos :: (Num a) =&gt; [a] -&gt; [a]
+triplos [] = []
+triplos (x:xs) = 
+    </code></pre>
   </div>
   <div>
     <em>triplos</em>
-    <pre>
-      triplos :: (Num a) =&gt; [a] -&gt; [a]
-      triplos [] = []
-      triplos (x:xs) = (3 * x) : triplos xs
-    </pre>
+    <pre><code class="hs">
+triplos :: (Num a) =&gt; [a] -&gt; [a]
+triplos [] = []
+triplos (x:xs) = (3 * x) : triplos xs
+    </code></pre>
   </div>
 
   <div>
@@ -167,70 +167,70 @@
 
   <div>
     <em>map</em>
-    <pre>
-      map :: ?? =&gt; ?? -&gt; [a] -&gt; [b]
-    </pre>
+    <pre><code class="hs">
+map :: ?? =&gt; ?? -&gt; [a] -&gt; [b]
+    </code></pre>
   </div>
   <div>
     <em>map</em>
-    <pre>
-      map :: ?? =&gt; ?? -&gt; [a] -&gt; [b]
-      map _ [] = []
-    </pre>
+    <pre><code class="hs">
+map :: ?? =&gt; ?? -&gt; [a] -&gt; [b]
+map _ [] = []
+    </code></pre>
   </div>
   <div>
     <em>map</em>
-    <pre>
-      map :: ?? =&gt; ?? -&gt; [a] -&gt; [b]
-      map _ [] = []
-      map f (x:xs) = 
-    </pre>
+    <pre><code class="hs">
+map :: ?? =&gt; ?? -&gt; [a] -&gt; [b]
+map _ [] = []
+map f (x:xs) = 
+    </code></pre>
   </div>
   <div>
     <em>map</em>
-    <pre>
-      map :: ?? =&gt; ?? -&gt; [a] -&gt; [b]
-      map _ [] = []
-      map f (x:xs) = f x : map f xs
-    </pre>
+    <pre><code class="hs">
+map :: ?? =&gt; ?? -&gt; [a] -&gt; [b]
+map _ [] = []
+map f (x:xs) = f x : map f xs
+    </code></pre>
   </div>
   <div>
     <em>map</em>
-    <pre>
-      map :: ?? -&gt; [a] -&gt; [b]
-      map _ [] = []
-      map f (x:xs) = f x : map f xs
-    </pre>
+    <pre><code class="hs">
+map :: ?? -&gt; [a] -&gt; [b]
+map _ [] = []
+map f (x:xs) = f x : map f xs
+    </code></pre>
   </div>
   <div>
     <em>map</em>
-    <pre>
-      map :: (a -&gt; b) -&gt; [a] -&gt; [b]
-      map _ [] = []
-      map f (x:xs) = f x : map f xs
-    </pre>
+    <pre><code class="hs">
+map :: (a -&gt; b) -&gt; [a] -&gt; [b]
+map _ [] = []
+map f (x:xs) = f x : map f xs
+    </code></pre>
   </div>
   <div>
     <em>dobros</em>
-    <pre>
-      dobros xs = map (* 2) xs
-    </pre>
+    <pre><code class="hs">
+dobros xs = map (* 2) xs
+    </code></pre>
   </div>
   <div>
     <em>dobros</em>
-    <pre>
-      dobros = map (* 2)
-    </pre>
+    <pre><code class="hs">
+dobros = map (* 2)
+    </code></pre>
   </div>
   <div>
-    <pre>
-      x3 = map (* 3)
-      x4 = map (* 4)
-      x5 = map (* 5)
-      x6 = map (* 6)
-      x7 = map (* 7)
-      x8 = map (* 8)
-    </pre>
+    <pre><code class="hs">
+x3 = map (* 3)
+x4 = map (* 4)
+x5 = map (* 5)
+x6 = map (* 6)
+x7 = map (* 7)
+x8 = map (* 8)
+    </code></pre>
   </div>
 
   <div>
@@ -239,13 +239,13 @@
 
   <div>
     <em>odds</em>
-    <pre>
-      odds :: (Integral a) =&gt; [a] -&gt; [a]
-      odds :: [a] -&gt; [a]
+    <pre><code class="hs">
+odds :: (Integral a) =&gt; [a] -&gt; [a]
+odds :: [a] -&gt; [a]
 
-      &gt; odds [1, 2, 3]
-      &gt; [1, 3]
-    </pre>
+&gt; odds [1, 2, 3]
+&gt; [1, 3]
+    </code></pre>
   </div>
 
   <div>
@@ -254,41 +254,41 @@
 
   <div>
     <em>odds</em>
-    <pre>
-      odds :: (Integral a) =&gt; [a] -&gt; [a]
-      odds [] = []
-    </pre>
+    <pre><code class="hs">
+odds :: (Integral a) =&gt; [a] -&gt; [a]
+odds [] = []
+    </code></pre>
   </div>
 
   <div>
     <em>odds</em>
-    <pre>
-      odds :: (Integral a) =&gt; [a] -&gt; [a]
-      odds [] = []
-      odds (x:xs) = if odd x then x : odds xs
-                             else     odds xs
-    </pre>
+    <pre><code class="hs">
+odds :: (Integral a) =&gt; [a] -&gt; [a]
+odds [] = []
+odds (x:xs) = if odd x then x : odds xs
+                       else     odds xs
+    </code></pre>
   </div>
 
   <div>
     <em>odds</em>
-    <pre>
-      odds :: (Integral a) =&gt; [a] -&gt; [a]
-      odds [] = []
-      odds (x:xs) = if odd x then x : odds xs
-                             else     odds xs
-    </pre>
+    <pre><code class="hs">
+odds :: (Integral a) =&gt; [a] -&gt; [a]
+odds [] = []
+odds (x:xs) = if odd x then x : odds xs
+                       else     odds xs
+    </code></pre>
   </div>
 
   <div>
     <em>evens</em>
-    <pre>
-      evens :: (Integral a) =&gt; [a] -&gt; [a]
-      evens :: [a] -&gt; [a]
+    <pre><code class="hs">
+evens :: (Integral a) =&gt; [a] -&gt; [a]
+evens :: [a] -&gt; [a]
 
-      &gt; evens [1, 2, 3]
-      &gt; [1, 3]
-    </pre>
+&gt; evens [1, 2, 3]
+&gt; [1, 3]
+    </code></pre>
   </div>
 
   <div>
@@ -297,20 +297,20 @@
 
   <div>
     <em>evens</em>
-    <pre>
-      evens :: (Integral a) =&gt; [a] -&gt; [a]
-      evens [] = []
-    </pre>
+    <pre><code class="hs">
+evens :: (Integral a) =&gt; [a] -&gt; [a]
+evens [] = []
+    </code></pre>
   </div>
 
   <div>
     <em>evens</em>
-    <pre>
-      evens :: (Integral a) =&gt; [a] -&gt; [a]
-      evens [] = []
-      evens (x:xs) = if even x then x : evens xs
-                               else     evens xs
-    </pre>
+    <pre><code class="hs">
+evens :: (Integral a) =&gt; [a] -&gt; [a]
+evens [] = []
+evens (x:xs) = if even x then x : evens xs
+                         else     evens xs
+    </code></pre>
   </div>
 
   <div>
@@ -331,51 +331,51 @@
 
   <div>
     <em>filter</em>
-    <pre>
-      filter :: ?? =&gt; ?? -&gt; [a] -&gt; [a]
-    </pre>
+    <pre><code class="hs">
+filter :: ?? =&gt; ?? -&gt; [a] -&gt; [a]
+    </code></pre>
   </div>
   <div>
     <em>filter</em>
-    <pre>
-      filter :: ?? =&gt; ?? -&gt; [a] -&gt; [a]
-      filter _ [] = []
-    </pre>
+    <pre><code class="hs">
+filter :: ?? =&gt; ?? -&gt; [a] -&gt; [a]
+filter _ [] = []
+    </code></pre>
   </div>
   <div>
     <em>filter</em>
-    <pre>
-      filter :: ?? =&gt; ?? -&gt; [a] -&gt; [a]
-      filter _ [] = []
-      filter p (x:xs) = 
-    </pre>
+    <pre><code class="hs">
+filter :: ?? =&gt; ?? -&gt; [a] -&gt; [a]
+filter _ [] = []
+filter p (x:xs) = 
+    </code></pre>
   </div>
   <div>
     <em>filter</em>
-    <pre>
-      filter :: ?? =&gt; ?? -&gt; [a] -&gt; [a]
-      filter _ [] = []
-      filter p (x:xs) = if p x then x : filter p xs
-                               else     filter p xs
-    </pre>
+    <pre><code class="hs">
+filter :: ?? =&gt; ?? -&gt; [a] -&gt; [a]
+filter _ [] = []
+filter p (x:xs) = if p x then x : filter p xs
+                         else     filter p xs
+    </code></pre>
   </div>
   <div>
     <em>filter</em>
-    <pre>
-      filter :: ?? -&gt; [a] -&gt; [a]
-      filter _ [] = []
-      filter p (x:xs) = if p x then x : filter p xs
-                               else     filter p xs
-    </pre>
+    <pre><code class="hs">
+filter :: ?? -&gt; [a] -&gt; [a]
+filter _ [] = []
+filter p (x:xs) = if p x then x : filter p xs
+                         else     filter p xs
+    </code></pre>
   </div>
   <div>
     <em>filter</em>
-    <pre>
-      filter :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
-      filter _ [] = []
-      filter p (x:xs) = if p x then x : filter p xs
-                               else     filter p xs
-    </pre>
+    <pre><code class="hs">
+filter :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
+filter _ [] = []
+filter p (x:xs) = if p x then x : filter p xs
+                         else     filter p xs
+    </code></pre>
   </div>
 
   <div>
@@ -383,10 +383,10 @@
   </div>
 
   <div>
-    <pre>
-      odds  = filter odd
-      evens = filter even
-    </pre>
+    <pre><code class="hs">
+odds  = filter odd
+evens = filter even
+    </code></pre>
   </div>
 
   <div>
@@ -394,56 +394,71 @@
   </div>
 
   <div>
-    _ :: (a -&gt; Bool) -&gt; [a] -&gt; Bool
-    _ :: (a -&gt; Bool) -&gt; [a] -&gt; Bool
-    _ :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
-    _ :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
-    _ :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
-    _ :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
-    _ :: (a -&gt; b -&gt; c) -&gt; [a] -&gt; [b] -&gt; [c] 
+    <pre><code class="hs">
+_ :: (a -&gt; Bool) -&gt; [a] -&gt; Bool
+_ :: (a -&gt; Bool) -&gt; [a] -&gt; Bool
+_ :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
+_ :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
+_ :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
+_ :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
+_ :: (a -&gt; b -&gt; c) -&gt; [a] -&gt; [b] -&gt; [c] 
+    </code></pre>
   </div>
 
   <div>
-    any :: (a -&gt; Bool) -&gt; [a] -&gt; Bool
-    all :: (a -&gt; Bool) -&gt; [a] -&gt; Bool
-    takeWhile :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
-    dropWhile :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
-    _ :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
-    _ :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
-    _ :: (a -&gt; b -&gt; c) -&gt; [a] -&gt; [b] -&gt; [c] 
+    <pre><code class="hs">
+any :: (a -&gt; Bool) -&gt; [a] -&gt; Bool
+all :: (a -&gt; Bool) -&gt; [a] -&gt; Bool
+takeWhile :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
+dropWhile :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
+_ :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
+_ :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
+_ :: (a -&gt; b -&gt; c) -&gt; [a] -&gt; [b] -&gt; [c] 
+    </code></pre>
   </div>
 
   <div>
-    any :: (a -&gt; Bool) -&gt; [a] -&gt; Bool
-    all :: (a -&gt; Bool) -&gt; [a] -&gt; Bool
-    takeWhile :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
-    dropWhile :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
-    span :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
-    break :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
-    _ :: (a -&gt; b -&gt; c) -&gt; [a] -&gt; [b] -&gt; [c] 
+    <pre><code class="hs">
+any :: (a -&gt; Bool) -&gt; [a] -&gt; Bool
+all :: (a -&gt; Bool) -&gt; [a] -&gt; Bool
+takeWhile :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
+dropWhile :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
+span :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
+break :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
+_ :: (a -&gt; b -&gt; c) -&gt; [a] -&gt; [b] -&gt; [c] 
+    </code></pre>
   </div>
   <div>
-    any :: (a -&gt; Bool) -&gt; [a] -&gt; Bool
-    all :: (a -&gt; Bool) -&gt; [a] -&gt; Bool
-    takeWhile :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
-    dropWhile :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
-    span :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
-    break :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
-    zipWith :: (a -&gt; b -&gt; c) -&gt; [a] -&gt; [b] -&gt; [c] 
+    <pre><code class="hs">
+any :: (a -&gt; Bool) -&gt; [a] -&gt; Bool
+all :: (a -&gt; Bool) -&gt; [a] -&gt; Bool
+takeWhile :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
+dropWhile :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
+span :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
+break :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
+zipWith :: (a -&gt; b -&gt; c) -&gt; [a] -&gt; [b] -&gt; [c] 
+    </code></pre>
   </div>
 
   <div>
-    _ :: (a -&gt; b) -&gt; (b -&gt; c) -&gt; a -&gt; c 
-    _ :: (a -&gt; Bool) -&gt; (a -&gt; a) -&gt; a -&gt; a
+    <pre><code class="hs">
+ _ :: (a -&gt; b) -&gt; (b -&gt; c) -&gt; a -&gt; c 
+ _ :: (a -&gt; Bool) -&gt; (a -&gt; a) -&gt; a -&gt; a
+    </code></pre>
   </div>
 
   <div>
-    (.) :: (a -&gt; b) -&gt; (b -&gt; c) -&gt; a -&gt; c 
-    _ :: (a -&gt; Bool) -&gt; (a -&gt; a) -&gt; a -&gt; a
+    <pre><code class="hs">
+(.) :: (a -&gt; b) -&gt; (b -&gt; c) -&gt; a -&gt; c 
+_ :: (a -&gt; Bool) -&gt; (a -&gt; a) -&gt; a -&gt; a
+    </code></pre>
   </div>
+
   <div>
-    (.) :: (a -&gt; b) -&gt; (b -&gt; c) -&gt; a -&gt; c 
-    until :: (a -&gt; Bool) -&gt; (a -&gt; a) -&gt; a -&gt; a
+    <pre><code class="hs">
+(.) :: (a -&gt; b) -&gt; (b -&gt; c) -&gt; a -&gt; c 
+until :: (a -&gt; Bool) -&gt; (a -&gt; a) -&gt; a -&gt; a
+    </code></pre>
   </div>
 
   <div><a>That's Aλλ Folks!</a></div>
