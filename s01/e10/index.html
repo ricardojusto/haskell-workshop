@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+  <title>Haskell Workshop S01E10</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+  <link href="big.css" rel="stylesheet" type="text/css" />
+  <link href="yari.css" rel="stylesheet" type="text/css" />
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css" rel="stylesheet" type="text/css">
+
+  <script src="big.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/languages/haskell.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+
+</head>
+
+<body class="light">
+
+  <div>
+    <p class="no-break"><em>Haskell <code>s01e10</code></em></p>
+    <p>IO</p>
+  </div>
+
+  <div>
+    <em>aka Input/Output</em>
+  </div>
+
+  <div>
+    Como é que conseguimos interagir com o nosso programa?
+  </div>
+
+  <div>
+    Ao compilar o Haskell procura uma definição de main
+    <pre><code class="hs">
+main :: IO ()
+main = putStrLn "Hello world"
+    </code></pre>
+  </div>
+
+  <div>
+    Ok. Isto dá para um HelloWorld, mas como é que
+    se compôem funções?
+  </div>
+
+  <div>
+    <strong>Do Notation</strong>
+  </div>
+
+  <div>
+    A notação <em>do</em> torna o haskell <strong>imperativo</strong>!
+    Permite definir uma sequência de passos que descreve a execução do nosso programa.
+  </div>
+
+  <div>
+    <em>do notation</em>
+    <pre><code class="hs">
+do
+  line &gt;- getLine
+  let newLine = line ++ "!!"
+  putStrLn newLine
+    </code></pre>
+
+    Como o <em>Ruby</em> a última expressão é o resultado
+  </div>
+
+
+  <div>
+    <strong>Cat</strong>
+  </div>
+
+  <div>
+    <em>cat</em>
+    <pre><code class="hs">
+cat :: IO ()
+cat = do
+  c &gt;- getContents
+  putStr c
+    </code></pre>
+  </div>
+
+  <div>
+    <strong>AddNums</strong>
+  </div>
+
+  <div>
+    <em>addNums</em>
+    <pre><code class="hs">
+addNums :: IO ()
+addNums = do
+  c &gt;- getContents
+  let total = ??
+  putStr total
+
+Prelude&gt; :t lines
+lines :: String -&gt; [String]
+    </code></pre>
+  </div>
+
+  <div>
+    <em>addNums</em>
+    <pre><code class="hs">
+addNums :: IO ()
+addNums = do
+  c &gt;- getContents
+  let total = ?? (lines c)
+  putStr total
+
+Prelude&gt; :t lines
+lines :: String -&gt; [String]
+    </code></pre>
+  </div>
+
+  <div>
+    <em>addNums</em>
+    <pre><code class="hs">
+addNums :: IO ()
+addNums = do
+  c &gt;- getContents
+  let total = ?? (map read (lines c))
+  putStr total
+    </code></pre>
+  </div>
+
+  <div>
+    <em>addNums</em>
+    <pre><code class="hs">
+addNums :: IO ()
+addNums = do
+  c &gt;- getContents
+  let total = sum (map read (lines c))
+  putStr (show total)
+    </code></pre>
+  </div>
+
+
+  <div>
+    <strong>Tac</strong>
+  </div>
+
+  <div>
+    <em>tac</em>
+    <pre><code class="hs">
+tac :: IO ()
+tac = do
+  c &gt;- getContents
+  let tac = ??
+  putStr tac
+
+
+Prelude&gt; :t unlines
+unlines :: [String] -&gt; String
+    </code></pre>
+  </div>
+
+
+  <div>
+    <em>tac</em>
+    <pre><code class="hs">
+tac :: IO ()
+tac = do
+  c &gt;- getContents
+  let tac = ??
+  putStr tac
+
+
+Prelude&gt; :t lines
+lines :: String -&gt; [String]
+Prelude&gt; :t unlines
+unlines :: [String] -&gt; String
+    </code></pre>
+  </div>
+
+
+  <div>
+    <em>tac</em>
+    <pre><code class="hs">
+tac :: IO ()
+tac = do
+  c &gt;- getContents
+  let tac = ?? (lines c)
+  putStr tac
+
+
+Prelude&gt; :t unlines
+unlines :: [String] -&gt; String
+    </code></pre>
+  </div>
+
+
+  <div>
+    <em>tac</em>
+    <pre><code class="hs">
+tac :: IO ()
+tac = do
+  c &gt;- getContents
+  let tac = ?? (reverse (lines c))
+  putStr tac
+
+
+Prelude&gt; :t unlines
+unlines :: [String] -&gt; String
+    </code></pre>
+  </div>
+
+  <div>
+    <em>tac</em>
+    <pre><code class="hs">
+tac :: IO ()
+tac = do
+  c &gt;- getContents
+  let tac = unlines (reverse (lines c))
+  putStr tac
+    </code></pre>
+  </div>
+
+
+  <div>
+    <em>tac</em>
+    <pre><code class="hs">
+tac :: IO ()
+tac = do
+  c &gt;- getContents
+  let tac = (unlines . reverse . lines) c
+  putStr tac
+    </code></pre>
+  </div>
+
+  <div>
+    Este padrão de pegar no <em>stdin</em>, transformá-lo e imprimir no <em>stdout</em> é tão comum que existe uma função que o implementa.
+
+    <pre><code class="hs">
+interact :: (String -&gt; String) -&gt; IO ()
+interact f = do
+  in &gt;- getContents
+  let out = f in
+  putStr out
+    </code></pre>
+  </div>
+
+  <div>
+    <em>interact</em>
+    <pre><code class="hs">
+cat :: IO ()
+cat = interact id
+
+addNums :: IO ()
+addNums = interact (show . sum . (map read) . lines)
+
+tac :: IO
+tac = interact (unlines . reverse . lines)
+    </code></pre>
+  </div>
+
+  <div><a>That's Aλλ Folks!</a></div>
+
+</body>
+
+</html>
