@@ -1,0 +1,48 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import os
+import re
+import ast
+import sys
+from time import sleep
+
+from slackclient import SlackClient
+
+
+def wait_for_hello(slack):
+    if not slack.rtm_connect():
+        raise IOError
+
+    hello = False
+    while slack.server.connected is True and not hello:
+        hello = bool([e for e in slack.rtm_read() if e['type'] == 'hello'])
+        sleep(1)
+
+
+def slack_client():
+    sc = SlackClient(token=os.environ['LAYABOUT_TOKEN'])
+    wait_for_hello(sc)
+    return sc
+
+
+def message_args(new_message):
+    message_literal, arg_list = new_message.split(maxsplit=1)
+    regex = r"\"[^\"\\]*(?:\\.[^\"\\]*)*\""
+    channel_id, body = [
+        ast.literal_eval(arg)
+        for arg in re.findall(regex, arg_list)
+    ]
+
+    return channel_id, body
+
+
+def main():
+    s = slack_client()
+    for new_message in sys.stdin:
+        if new_message:
+            s.rtm_send_message(*message_args(new_message))
+
+
+if __name__ == '__main__':
+    main()
